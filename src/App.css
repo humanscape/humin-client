@@ -25,3 +25,39 @@
   position: absolute;
   border: solid 1px black;
 }
+
+#InfoList {
+  width: 100%;
+ border-collapse: collapse;
+}
+
+#RoomName {
+  width: 20%;
+}
+
+#EventSummary {
+  width: 40%;
+}
+
+#EventTime {
+  width: 40%;
+}
+
+#InfoList tbody tr {
+  height: 40px;
+  border-bottom: solid 1px black;
+}
+
+#InfoList tbody tr:hover {
+  background-color: black;
+  transition: 2s;
+  cursor: pointer;
+}
+
+#InfoList tbody tr td h3 {
+  margin: 10px auto;
+}
+
+.RoomTime{
+  font-size: small;
+}

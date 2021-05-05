@@ -30,9 +30,9 @@ class InfoList extends React.Component {
             <table id="InfoList">
                 <thead>
                     <tr>
-                        <th>RoomName</th>
-                        <th>Event Summary</th>
-                        <th>Event time</th>
+                        <th id="RoomName">RoomName</th>
+                        <th id="EventSummary">Event Summary</th>
+                        <th id="Users">참석자</th>
                     </tr>
                 </thead>
                 <tbody>

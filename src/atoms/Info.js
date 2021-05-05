@@ -9,7 +9,7 @@ const Info = props => {
         const event = room.events[0]
         const now_stamp = Date.parse(new Date());
         const start_time_stamp = Date.parse(event.start_time);
-        const book_stamp_range = 30 * 60 * 1000;
+        const book_stamp_range = 60 * 60 * 1000;
         if (now_stamp>=start_time_stamp){
             return <InConferenceInfo room={room}/>
         }
