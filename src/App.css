@@ -1,56 +1,75 @@
-.App {
-  position: absolute;
+#root{
   width: 100%;
   height: 100%;
   text-align: center;
   background-color: #023047;
   color: white;
+  z-index: 100;
+}
+
+.App {
+  height: 100%;
+  width: 1300px;
+  margin: 0 auto;
+}
+
+#MainPage{
+  float: left;
+  width: 800px;
+  height: 100%;
 }
 
 #RoomMap{
-  left: 20%;
-  position: absolute;
-  width: 80%;
+  float: left;
   height: 100%;
+  width: 600px;
 }
 
 #SidePanel{
-  position: absolute;
-  width: 20%;
-  height: 100%;
-  border: silid 1px black;
+  float: left;
+  width: 200px;
 }
 
-.RoomBlock{
-  position: absolute;
-  border: solid 1px black;
+#canvas{
+  width: 600px;
+  height: 100%;
+}
+
+#InfoPage {
+  float: left;
+  width: 500px;
+  height: 100%;
 }
 
 #InfoList {
   width: 100%;
- border-collapse: collapse;
+  border-collapse: collapse;
 }
 
 #RoomName {
   width: 20%;
 }
 
-#EventSummary {
-  width: 40%;
+#Schedule{
+  width: 30%;
 }
 
-#EventTime {
-  width: 40%;
+#EventSummary {
+  width: 30%;
+}
+
+#Users{
+  width: 20%;
 }
 
 #InfoList tbody tr {
   height: 40px;
-  border-bottom: solid 1px black;
+  border-bottom: solid 1px #CFD8DC;
 }
 
 #InfoList tbody tr:hover {
-  background-color: black;
-  transition: 2s;
+  background-color: #ECEFF1;
+  transition: 1s;
   cursor: pointer;
 }
 
@@ -60,4 +79,12 @@
 
 .RoomTime{
   font-size: small;
+}
+
+.DropdownActive{
+  display: block;
+}
+
+.DropdownInactive{
+  display: none;
 }

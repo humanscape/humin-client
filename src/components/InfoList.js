@@ -30,13 +30,15 @@ class InfoList extends React.Component {
             <table id="InfoList">
                 <thead>
                     <tr>
-                        <th id="RoomName">RoomName</th>
-                        <th id="EventSummary">Event Summary</th>
+                        <th id="RoomName">공간</th>
+                        <th id="Schedule">일정</th>
+                        <th id="EventSummary">이벤트</th>
                         <th id="Users">참석자</th>
                     </tr>
                 </thead>
                 <tbody>
                     {this.state.rooms.map(room => {
+                        console.log(room);
                         return(<Info room={room}/>)
                     })}
                 </tbody>

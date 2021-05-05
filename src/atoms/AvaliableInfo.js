@@ -1,5 +1,42 @@
+import UserDropdown from "./UsersDropdown";
+
+const EmptyEvent = props => {
+    return (
+        <tr style={{color: '#2A9D8F'}}>
+            <td><h3>{props.room.name}</h3></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    )
+}
+
+const NotEmptyEvent = props => {
+    const event = props.room.events[0];
+    const start_time_stamp = Date.parse(event.start_time)
+    const now_time_stamp = Date.parse(new Date());
+    const min = Math.floor((start_time_stamp-now_time_stamp)/1000/60);
+    return (
+        <tr style={{color: '#2A9D8F'}}>
+            <td>
+                <h3>{props.room.name}</h3>
+            </td>
+            <td>
+                {min>=60? <span><b>{Math.floor(min/60)}</b>시간 <b>{min%60}</b></span>: <b>{min}</b>}분 남음
+            </td>
+            <td>{event.summary}</td>
+            <td><UserDropdown users={event.users}/></td>
+        </tr>
+    )   
+}
+
+const intToString = int => {
+    return int.toString().padStart(2, "0");
+}
+
 const AvaliableInfo = props => {
     const room=props.room;
+    const date = new Date();
     if (room.events.length>0){
         const event = room.events[0];
         const start_time = {
@@ -8,27 +45,13 @@ const AvaliableInfo = props => {
             day: event.start_time.substring(8, 10),
             hour: event.start_time.substring(11, 13),
             min: event.start_time.substring(14, 16),
+        };
+        if (start_time.year==date.getFullYear() && start_time.month==intToString(date.getMonth()+1) && start_time.day==intToString(date.getDate())){
+            return <NotEmptyEvent room={room}/>
         }
-        return (
-            <tr style={{color: '#2A9D8F'}}>
-                <td>
-                    <h3>{room.name}</h3>
-                    <div className="RoomTime">{start_time.year}년 {start_time.month}월 {start_time.day}일 {start_time.hour}시 {start_time.min}분에 시작</div>
-                </td>
-                <td>{event.summary}</td>
-                <td></td>
-            </tr>
-        )   
+            return <EmptyEvent room={room}/>
     }
-    else{
-        return (
-            <tr style={{color: '#2A9D8F'}}>
-                <td><h3>{room.name}</h3></td>
-                <td>Avaliable</td>
-                <td></td>
-            </tr>
-        )
-    }
+        return <EmptyEvent room={room}/>
 }
 
 export default AvaliableInfo;

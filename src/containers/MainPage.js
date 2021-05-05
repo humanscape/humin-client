@@ -5,7 +5,7 @@ import SidePanel from "../components/SidePanel";
 class MainPage extends React.Component {
     render() {
         return (
-            <div>
+            <div id="MainPage">
                 <SidePanel/>
                 <RoomMap/>
             </div>
