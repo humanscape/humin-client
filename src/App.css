@@ -19,8 +19,9 @@
 
 #RoomMap{
   float: left;
-  height: 100%;
+  height: 500px;
   width: 700px;
+  border: solid 1px black;
 }
 
 #SidePanel{
@@ -86,4 +87,9 @@
 
 .DropdownInactive{
   display: none;
+}
+
+#RoomMap canvas {
+  width: 100%;
+  height: 100%;
 }

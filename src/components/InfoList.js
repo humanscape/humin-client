@@ -27,20 +27,21 @@ async function getRooms(organization){
     return response.data.filter((room) => (rooms.includes(room.name)));
 }
 
-
 const InfoList = () => {
     const roomList = useSelector(state => state.rooms);
     const organization = useSelector(state => state.organization);
     const dispatch = useDispatch();
-    getRooms(organization).then(roomList => {
-        dispatch(setRooms(roomList));
-    })
+    const setRoomList = () => {
+        getRooms(organization).then(roomList => {
+            dispatch(setRooms(roomList));
+        })
+    };
+
     useEffect(() => {
+        setRoomList();
         setInterval(() => {
-            getRooms(organization).then(roomList => {
-                dispatch(setRooms(roomList));
-            })
-        }, 6000);
+            setRoomList();
+        }, 60000);
     }, [])
 
         return (
