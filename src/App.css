@@ -2,32 +2,31 @@
   width: 100%;
   height: 100%;
   text-align: center;
-  background-color: #023047;
-  color: white;
-  z-index: 100;
 }
 
 .App {
   height: 100%;
-  width: 1300px;
+  width: 1600px;
   margin: 0 auto;
+  margin-top: 20px;
 }
 
 #MainPage{
   float: left;
-  width: 800px;
+  width: 1000px;
   height: 100%;
 }
 
 #RoomMap{
   float: left;
   height: 100%;
-  width: 600px;
+  width: 700px;
 }
 
 #SidePanel{
   float: left;
-  width: 200px;
+  width: 250px;
+  height: 100%;
 }
 
 #canvas{
@@ -37,7 +36,7 @@
 
 #InfoPage {
   float: left;
-  width: 500px;
+  width: 600px;
   height: 100%;
 }
 

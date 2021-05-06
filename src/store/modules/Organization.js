@@ -1,0 +1,17 @@
+import { useDispatch } from "react-redux";
+import { setRooms } from "./Rooms";
+
+const SET_ORGANIZATION = "ORGANIZATIONAction/SET_ORGANIZATION";
+
+export const SETOrganization = organization => ({type: SET_ORGANIZATION, organization});
+
+const initalState = "all";
+
+export default function organization(state = initalState, action) {
+    switch(action.type) {
+        case SET_ORGANIZATION:
+            return action.organization;
+        default:
+            return state;
+    }
+}

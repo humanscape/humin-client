@@ -1,31 +1,48 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Info from "../atoms/Info";
+import { setRooms } from "../store/modules/Rooms";
 
-const roomList = ["안방", "골방", "H1", "H2", "H3", "주방", "C1", "C2", "C3", "PR Room", "휴방"]
 
-async function getEventList(roomName){
-    return await axios.get("http://localhost:8000/event/"+roomName+"/")
-} 
+const roomList = {
+    public: ["PR Room", "C1", "C2", "C3", "휴방", "주방"],
+    humanscape : ["H1", "H2", "H3", "안방", "골방"],
+    mommytalk: ["M1", "M2", "M3"]
+}
 
-class InfoList extends React.Component {
+async function getRooms(organization){
+    let rooms;
+    if (organization==="all"){
+        rooms = roomList.public.concat(roomList.humanscape, roomList.mommytalk);
+    }
+    else if (organization==="humanscape"){
+        rooms = roomList.public.concat(roomList.humanscape);
 
-     constructor(props){
-         super(props)
-         this.state = {
-             rooms: []
-         }
-     }
+    }
+    else if (organization==="mommytalk"){
+        rooms = roomList.public.concat(roomList.mommytalk);
+    }
+    const response = await axios.get("http://localhost:8000/event/");
+    return response.data.filter((room) => (rooms.includes(room.name)));
+}
 
-    componentDidMount(){
-        roomList.forEach(roomName => {
-            getEventList(roomName).then(response => {
-                this.setState({rooms: this.state.rooms.concat(response.data)})
+
+const InfoList = () => {
+    const roomList = useSelector(state => state.rooms);
+    const organization = useSelector(state => state.organization);
+    const dispatch = useDispatch();
+    getRooms(organization).then(roomList => {
+        dispatch(setRooms(roomList));
+    })
+    useEffect(() => {
+        setInterval(() => {
+            getRooms(organization).then(roomList => {
+                dispatch(setRooms(roomList));
             })
-        });
-    };
+        }, 6000);
+    }, [])
 
-    render() {
         return (
             <table id="InfoList">
                 <thead>
@@ -37,14 +54,10 @@ class InfoList extends React.Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {this.state.rooms.map(room => {
-                        console.log(room);
-                        return(<Info room={room}/>)
-                    })}
+                    {roomList.length>0 && roomList.map(room => {return(<Info room={room}/>)})}
                 </tbody>
             </table>
         )
-    }
 }
 
 export default InfoList;

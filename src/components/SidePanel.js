@@ -4,7 +4,7 @@ class SidePanel extends React.Component {
     render() {
         return (
             <div id="SidePanel">
-                test
+                sidepanel
             </div>
         )
     }

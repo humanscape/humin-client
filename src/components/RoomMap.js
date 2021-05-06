@@ -9,9 +9,17 @@ const RoomMap = () => {
         "booked": "#F4A261",
         "inConference": "#E76F51"
     }
+
+    const canvasRef = React.createRef();
+
+    useEffect(() => {
+        const ctx = canvasRef.current.getContext("2d");
+        ctx.fillRect(50, 50, 125, 125);
+    }, [])
+
     return (
         <div>
-            <img src={svg}/>
+            <canvas ref={canvasRef}/>
         </div>
     );
 };
