@@ -1,38 +1,159 @@
-.App {
+#root{
+  width: 100%;
+  height: 100%;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App {
+  height: 100%;
+  width: 1400px;
+  margin: 0 auto;
+  margin-top: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#MainPage{
+  float: left;
+  width: 900px;
+  height: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+#RoomMap{
+  float: left;
+  height: 500px;
+  width: 700px;
+  position: relative;
+}
+
+#SidePanel{
+  float: left;
+  width: 200px;
+  height: 100%;
+}
+
+#InfoPage {
+  float: left;
+  width: 500px;
+  height: 100%;
+}
+
+#InfoList {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+#Schedule{
+  padding: 0 10px;
+}
+
+#EventSummary {
+  padding: 0 10px;
+}
+
+#InfoList tbody {
+  font-size: 13px;
+}
+
+#InfoList tbody tr {
+  height: 45px;
+  border-bottom: solid 1px #CFD8DC;
+}
+
+#InfoList tbody tr:hover {
+  background-color: #ECEFF1;
+  transition: 1s;
+  cursor: pointer;
+}
+
+#InfoList tbody tr td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* 
+#InfoList tbody tr td::nth-child(1) {
+  width: 10%;
+}
+
+#InfoList tbody tr td::nth-child(2) {
+  width: 30%;
+}
+
+#InfoList tbody tr td::nth-child(3) {
+  width: 30%;
+}
+
+#InfoList tbody tr td::nth-child(4) {
+  width: 10%;
+} */
+
+#InfoList tbody tr td h3 {
+  margin: 10px auto;
+}
+
+.RoomTime{
+  font-size: small;
+}
+
+.DropdownActive{
+  display: block;
+  position: absolute;
+  padding: 5px;
+  margin-top: -15px;
+  background-color: rgba(154,165,172,0.5);
+  border: solid 0.5px rgba(0, 0, 0, 0.3);
+}
+
+.DropdownInactive{
+  display: none;
+}
+
+#Map{
+  width: 100%;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+}
+
+#RoomMap canvas {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+}
+
+#OrganizationBar {
+  margin-left: 30px;
+}
+
+#OrganizationBar button{
+  float: left;
+  margin-left: 2px;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.8);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+#ColorBar {
+  margin-top: 360px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#ColorBar div{
+  border: solid 1px #CFD8DC;
+  margin-bottom: 3px;
+  padding: 5px 0;
+}
+
+.Color{
+  width: 20px;
+  height: 10px;
+  border-radius: 10px;
+  float: left;
 }
