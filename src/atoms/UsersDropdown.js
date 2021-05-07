@@ -9,12 +9,9 @@ const UserDropdown = props => {
             <div className={isActive?"DropdownActive":"DropdownInactive"}>
                 {props.users.map(user =>{
                     const user_info=user.username.split("@")
-                    if (user_info[1]=="resource.calendar.google.com"){
-                        return;
+                    if (user_info[1]!=="resource.calendar.google.com"){
+                        return <div>{user_info[0]}</div>;
                     }
-                    return (
-                        <div>{user_info[0]}</div>
-                    )
                 })}
             </div>
         </div>
