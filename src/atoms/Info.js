@@ -19,10 +19,10 @@ const Info = props => {
     if (room.events.length>0){
         const eventTime = room.events[0].start_time;
         const result = EventClassifier(eventTime);
-            if (result==AVALIABLE) {
+            if (result===AVALIABLE) {
                 return <AvaliableInfo room={room} onClick={props.onClick}/>
             }
-            else if (result==SOON) {
+            else if (result===SOON) {
                 return <BookedInfo room={room} onClick={props.onClick}/>
             }
             else {

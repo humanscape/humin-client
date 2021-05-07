@@ -1,8 +1,7 @@
-import React, { createRef, useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import EventClassifier from "../common/lib/EventClassifier";
 import map from '../common/images/map.png';
-import CanvasResize from "react-canvas-resize";
 const RoomMap = () => {
 
     const getCTX = canvas => {
