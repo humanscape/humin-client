@@ -7,7 +7,7 @@ const InConferenceInfo = props => {
     const end_time_stamp = Date.parse(event.end_time);
     const min = Math.floor((end_time_stamp-now_stamp)/1000/60);
     return (
-        <tr style={{color: '#E76F51'}}>
+        <tr style={{color: '#E76F51'}} onClick={props.onClick}>
             <td>
                 <h3>{room.name}</h3>
             </td>

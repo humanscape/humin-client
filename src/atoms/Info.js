@@ -9,28 +9,28 @@ const SOON = 2;
 const STARTED = 3;
 
 const Info = props => {
-    const [nowStamp, setNowStamp] = useState(0);
+    const [date, setDate] = useState(0);
     useEffect(() => {
         setInterval(() => {
-            setNowStamp(Date.parse(new Date()))
-        }, 10000);
-    }, [])
+            setDate(new Date());
+        }, 10000)
+    }, [date])
     const room = props.room
     if (room.events.length>0){
-        const eventTimeStamp = Date.parse(room.events[0].start_time);
-        const result = EventClassifier(eventTimeStamp)
+        const eventTime = room.events[0].start_time;
+        const result = EventClassifier(eventTime);
             if (result==AVALIABLE) {
-                return <AvaliableInfo room={room}/>
+                return <AvaliableInfo room={room} onClick={props.onClick}/>
             }
             else if (result==SOON) {
-                return <BookedInfo room={room}/>
+                return <BookedInfo room={room} onClick={props.onClick}/>
             }
             else {
-                return <InConferenceInfo room={room}/>
+                return <InConferenceInfo room={room} onClick={props.onClick}/>
             }
     }
     else {
-        return <AvaliableInfo room={room}/>
+        return <AvaliableInfo room={room} onClick={props.onClick}/>
     }
 }
 

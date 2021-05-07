@@ -7,7 +7,7 @@ const BookedInfo = props => {
     const start_time_stamp = Date.parse(event.start_time);
     const users = event.users;
     return (
-        <tr style={{color: '#F4A261'}}>
+        <tr style={{color: '#F4A261'}} onClick={props.onClick}>
             <td>
                 <h3>{room.name}</h3>
             </td>

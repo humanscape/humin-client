@@ -2,7 +2,7 @@ import UserDropdown from "./UsersDropdown";
 
 const EmptyEvent = props => {
     return (
-        <tr style={{color: '#2A9D8F'}}>
+        <tr style={{color: '#2A9D8F'}} onClick={props.onClick}>
             <td><h3>{props.room.name}</h3></td>
             <td></td>
             <td></td>
@@ -17,7 +17,7 @@ const NotEmptyEvent = props => {
     const now_time_stamp = Date.parse(new Date());
     const min = Math.floor((start_time_stamp-now_time_stamp)/1000/60);
     return (
-        <tr style={{color: '#2A9D8F'}}>
+        <tr style={{color: '#2A9D8F'}} onClick={props.onClick}>
             <td>
                 <h3>{props.room.name}</h3>
             </td>
@@ -47,11 +47,11 @@ const AvaliableInfo = props => {
             min: event.start_time.substring(14, 16),
         };
         if (start_time.year==date.getFullYear() && start_time.month==intToString(date.getMonth()+1) && start_time.day==intToString(date.getDate())){
-            return <NotEmptyEvent room={room}/>
+            return <NotEmptyEvent room={room} onClick={props.onClick}/>
         }
-            return <EmptyEvent room={room}/>
+            return <EmptyEvent room={room} onClick={props.onClick}/>
     }
-        return <EmptyEvent room={room}/>
+        return <EmptyEvent room={room} onClick={props.onClick}/>
 }
 
 export default AvaliableInfo;

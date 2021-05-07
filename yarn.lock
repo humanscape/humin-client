@@ -6867,6 +6867,11 @@ jsprim@^1.2.2:
     array-includes "^3.1.2"
     object.assign "^4.1.2"
 
+just-observable@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/just-observable/-/just-observable-0.3.0.tgz#c4b2c7430c443feca1f4b860bae2733a3c808346"
+  integrity sha512-24V+Osl0tiuhNC/5Jpal4Gi41KhAnqLICLXOu/WjFoYqZs9RC9AK9t/vGU4dAeup089NaK9eR/5Uit+wcgEYng==
+
 killable@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/killable/-/killable-1.0.1.tgz#4c8ce441187a061c7474fb87ca08e2a638194892"
@@ -7116,6 +7121,13 @@ make-dir@^3.0.0, make-dir@^3.0.2:
   integrity sha512-g3FeP20LNwhALb/6Cz6Dd4F2ngze0jz7tbzrD2wAV+o9FeNHe4rL+yK2md0J/fiSf1sa1ADhXqi5+oVwOM/eGw==
   dependencies:
     semver "^6.0.0"
+
+make-list-provider@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/make-list-provider/-/make-list-provider-0.2.1.tgz#82297d94bfc0b94ee9e126a63eba5f425c3d40d8"
+  integrity sha512-q/hSmZxYL4H0CtGE8ef+n7uDBiJ2NlB7H0qDMVfYwpvoO/2rtOhC6dkthYIKcO5iSuA6tFW4MoqV9WBiw5KlKA==
+  dependencies:
+    just-observable "^0.3.0"
 
 makeerror@1.0.x:
   version "1.0.11"
@@ -9072,6 +9084,14 @@ react-app-polyfill@^2.0.0:
     raf "^3.4.1"
     regenerator-runtime "^0.13.7"
     whatwg-fetch "^3.4.1"
+
+react-canvas-resize@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-canvas-resize/-/react-canvas-resize-0.4.0.tgz#e1b7b9963aa8396bc46ab228549aa17aaaf51f02"
+  integrity sha512-EeALKLRgMgS6NAreGApZ1iRa+JrrzsY863lnQYr6oawEuTwwVtfIsBi8Oy2xurs3/+ygXPS0Yu+gIbEPUYPayw==
+  dependencies:
+    just-observable "^0.3.0"
+    make-list-provider "^0.2.1"
 
 react-dev-utils@^11.0.3:
   version "11.0.4"
