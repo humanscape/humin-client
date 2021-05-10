@@ -37,11 +37,11 @@ const InfoList = () => {
         })
     };
 
-const InfoClick = e => {
-    const roomName = e.currentTarget.getElementsByTagName("td")[0].textContent;
-    const clickedRoom = roomList.find(room => {return room.name===roomName});
-    console.log(clickedRoom);
-}
+    const InfoClick = e => {
+        const roomName = e.currentTarget.getElementsByTagName("td")[0].textContent;
+        const clickedRoom = roomList.find(room => {return room.name===roomName});
+        console.log(clickedRoom);
+    }
 
     useEffect(() => {
         setRoomList();
@@ -50,27 +50,27 @@ const InfoClick = e => {
         }, 10000);
     }, [])
 
-        return (
-            <table id="InfoList">
-                <colgroup>
-                    <col width="10%" />
-                    <col width="40%"/>
-                    <col width="40%"/>
-                    <col width="10%" />
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th id="RoomName">공간</th>
-                        <th id="Schedule">일정</th>
-                        <th id="EventSummary">이벤트</th>
-                        <th id="Users">참석자</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {roomList.length>0 && roomList.map(room => {return(<Info room={room} onClick={InfoClick}/>)})}
-                </tbody>
-            </table>
-        )
+    return (
+        <table id="InfoList">
+            <colgroup>
+                <col width="10%" />
+                <col width="40%"/>
+                <col width="40%"/>
+                <col width="10%" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th id="RoomName">공간</th>
+                    <th id="Schedule">일정</th>
+                    <th id="EventSummary">이벤트</th>
+                    <th id="Users">참석자</th>
+                </tr>
+            </thead>
+            <tbody>
+                {roomList.length>0 && roomList.map(room => {return(<Info room={room} onClick={InfoClick}/>)})}
+            </tbody>
+        </table>
+    )
 }
 
 export default InfoList;

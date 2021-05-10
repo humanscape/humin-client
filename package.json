@@ -9,7 +9,15 @@
     "axios": "^0.21.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+<<<<<<< Updated upstream
     "react-redux": "^7.2.4",
+=======
+<<<<<<< Updated upstream
+=======
+    "react-google-login": "^5.2.2",
+    "react-redux": "^7.2.4",
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     "react-scripts": "4.0.3",
     "redux": "^4.1.0"
   },

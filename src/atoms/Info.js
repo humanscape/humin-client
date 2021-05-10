@@ -14,7 +14,7 @@ const Info = props => {
         setInterval(() => {
             setDate(new Date());
         }, 10000)
-    }, [date])
+    }, [])
     const room = props.room
     if (room.events.length>0){
         const eventTime = room.events[0].start_time;

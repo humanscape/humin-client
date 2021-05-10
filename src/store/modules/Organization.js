@@ -1,6 +1,3 @@
-import { useDispatch } from "react-redux";
-import { setRooms } from "./Rooms";
-
 const SET_ORGANIZATION = "ORGANIZATIONAction/SET_ORGANIZATION";
 
 export const SETOrganization = organization => ({type: SET_ORGANIZATION, organization});

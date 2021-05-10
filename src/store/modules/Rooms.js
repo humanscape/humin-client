@@ -1,5 +1,3 @@
-import axios from "axios";
-
 const SET_ROOMS = "ROOMSAction/SET_ROOMS";
 
 export const setRooms = rooms => ({type: SET_ROOMS, rooms});
