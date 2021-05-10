@@ -139,22 +139,20 @@
   color: white;
 }
 
-<<<<<<< Updated upstream
 #ColorBar {
   margin-top: 360px;
   margin-left: 20px;
   margin-right: 20px;
-=======
-<<<<<<< Updated upstream
+}
+
 .App-link {
   color: #61dafb;
-=======
+}
+
 #ColorBar {
   margin-top: 250px;
   margin-left: 20px;
   margin-right: 20px;
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 }
 
 #ColorBar div{
@@ -162,24 +160,14 @@
   margin-bottom: 3px;
   padding: 5px 0;
 }
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
 
 .Color{
   width: 20px;
   height: 10px;
   border-radius: 10px;
   float: left;
-<<<<<<< Updated upstream
-}
-=======
 }
 
 #Login{
   margin-top: 70px;
 }
->>>>>>> Stashed changes
->>>>>>> Stashed changes
