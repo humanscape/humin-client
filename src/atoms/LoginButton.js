@@ -1,5 +1,6 @@
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
+import { dropClickedRoom } from "../store/modules/ClickedRoom";
 import { dropProfile, setProfile } from "../store/modules/UserProfile";
 
 const LoginButton = () => {
@@ -7,7 +8,14 @@ const LoginButton = () => {
     const dispatch = useDispatch();
 
     const onLoginGoogle = result => {
-        dispatch(setProfile(result));
+        const domain = result.profileObj.email.split("@")[1];
+        if (domain!="humanscape.io"){
+            alert("휴먼스케이프 계정으로만 로그인 가능합니다.");
+        }
+        else{
+            dispatch(setProfile(result));
+            dispatch(dropClickedRoom());
+        }
     }
     
     const failLoginGoogle = result => {
@@ -17,6 +25,7 @@ const LoginButton = () => {
     const onLogoutGoogle = result => {
         console.log(result);
         dispatch(dropProfile());
+        dispatch(dropClickedRoom());
     }
 
     return(
@@ -31,8 +40,8 @@ const LoginButton = () => {
             cookiePolicy={'single_host_origin'}
         />:
         <div>
-            <img style={{width:"50px", height:"50px", borderRadius: "50px"}} src={userProfile.profileObj.imageUrl}/>
-            <GoogleLogout onLogoutSuccess={onLogoutGoogle}/>
+            <img style={{width:"50px", height:"50px", borderRadius: "50px"}} src={userProfile.profileObj.imageUrl}/><br/>
+            <GoogleLogout buttonText="Logout" onLogoutSuccess={onLogoutGoogle}/>
         </div>
         }
     </div>

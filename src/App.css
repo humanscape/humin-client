@@ -70,22 +70,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* 
-#InfoList tbody tr td::nth-child(1) {
-  width: 10%;
-}
-
-#InfoList tbody tr td::nth-child(2) {
-  width: 30%;
-}
-
-#InfoList tbody tr td::nth-child(3) {
-  width: 30%;
-}
-
-#InfoList tbody tr td::nth-child(4) {
-  width: 10%;
-} */
 
 #InfoList tbody tr td h3 {
   margin: 10px auto;
@@ -139,18 +123,12 @@
   color: white;
 }
 
-#ColorBar {
-  margin-top: 360px;
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
 .App-link {
   color: #61dafb;
 }
 
 #ColorBar {
-  margin-top: 250px;
+  margin-top: 20px;
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -170,4 +148,43 @@
 
 #Login{
   margin-top: 70px;
+}
+
+#SetEvent{
+  margin-top: 10px;
+  width: 100%;
+}
+
+#AttendAutocomplateList{
+  position: absolute;
+  margin-left: 45px;
+  width: 150px;
+  background-color: #ECEFF1;
+}
+
+#AttendAutocomplateList div{
+  border-bottom: solid 1px #CFD8DC;
+  height: 25px;
+  line-height: 25px;
+}
+
+#AttendAutocomplateList div:hover{
+  background-color: cadetblue;
+}
+
+#AttendeesList{
+  font-size: 13px;
+}
+
+#AttendeesList div{
+  margin-top: 2px;
+  width: 200px;
+  height: 20px;
+  background-color: cadetblue;
+  border-radius: 150px;
+}
+
+#AttendeesList div span{
+  float: right;
+  margin-right: 5px;
 }

@@ -40,7 +40,6 @@ const InfoList = () => {
             alert("회의실 예약은 로그인이 필요한 서비스입니다.");
         }
         else{
-            console.log(clickedRoom);
             dispatch(setClickedRoom(clickedRoom.id));
         }
     }
