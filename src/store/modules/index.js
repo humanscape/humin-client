@@ -4,9 +4,9 @@ import organization from './Organization';
 import userProfile from './UserProfile';
 
 const reducer = combineReducers({
-    rooms,
-    organization,
-    userProfile
+    rooms: rooms,
+    organization: organization,
+    userProfile: userProfile,
 });
 
 export default reducer;

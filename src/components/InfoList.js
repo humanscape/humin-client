@@ -11,32 +11,25 @@ const roomList = {
     mommytalk: ["M1", "M2", "M3"]
 }
 
-async function getRooms(organization){
-    let rooms;
+function getRoomNames(organization){
+    let roomNames;
     if (organization==="all"){
-        rooms = roomList.public.concat(roomList.humanscape, roomList.mommytalk);
+        return roomList.public.concat(roomList.humanscape, roomList.mommytalk);
     }
     else if (organization==="humanscape"){
-        rooms = roomList.public.concat(roomList.humanscape);
+        return roomList.public.concat(roomList.humanscape);
 
     }
     else if (organization==="mommytalk"){
-        rooms = roomList.public.concat(roomList.mommytalk);
+        return roomList.public.concat(roomList.mommytalk);
     }
-    const response = await axios.get("http://localhost:8000/event/");
-    return response.data.filter((room) => (rooms.includes(room.name)));
+    
 }
 
 const InfoList = () => {
     const roomList = useSelector(state => state.rooms);
     const organization = useSelector(state => state.organization);
     const dispatch = useDispatch();
-    const setRoomList = () => {
-        getRooms(organization).then(roomList => {
-            dispatch(setRooms(roomList));
-        })
-    };
-
     const InfoClick = e => {
         const roomName = e.currentTarget.getElementsByTagName("td")[0].textContent;
         const clickedRoom = roomList.find(room => {return room.name===roomName});
@@ -44,10 +37,18 @@ const InfoList = () => {
     }
 
     useEffect(() => {
-        setRoomList();
+        const fetchRooms = async() => {
+            console.log("Test");
+            const roomNames = getRoomNames(organization);
+            const response = await axios.get("http://localhost:8000/event/");
+            const roomList = response.data.filter((room) => (roomNames.includes(room.name)));
+            dispatch(setRooms(roomList));
+        }
+
+        fetchRooms();
         setInterval(() => {
-            setRoomList();
-        }, 10000);
+            fetchRooms();
+        }, 6000);
     }, [])
 
     return (
@@ -72,5 +73,4 @@ const InfoList = () => {
         </table>
     )
 }
-
 export default InfoList;

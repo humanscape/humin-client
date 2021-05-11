@@ -9,12 +9,6 @@ const SOON = 2;
 const STARTED = 3;
 
 const Info = props => {
-    const [date, setDate] = useState(0);
-    useEffect(() => {
-        setInterval(() => {
-            setDate(new Date());
-        }, 10000)
-    }, [])
     const room = props.room
     if (room.events.length>0){
         const eventTime = room.events[0].start_time;
