@@ -1,4 +1,4 @@
-const SET_ORGANIZATION = "ORGANIZATIONAction/SET_ORGANIZATION";
+const SET_ORGANIZATION = "organization-action/SET_ORGANIZATION";
 
 export const SETOrganization = organization => ({type: SET_ORGANIZATION, organization});
 

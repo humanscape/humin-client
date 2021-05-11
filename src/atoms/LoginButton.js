@@ -1,20 +1,22 @@
-import { useState } from "react";
-import GoogleLogin from "react-google-login";
+import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
-import { setProfile } from "../store/modules/UserProfile";
+import { dropProfile, setProfile } from "../store/modules/UserProfile";
 
 const LoginButton = () => {
-    // const [userProfile, setUSerProfile] = useState(null);
     const userProfile = useSelector(state => state.userProfile);
     const dispatch = useDispatch();
 
     const onLoginGoogle = result => {
-        console.log(result);
         dispatch(setProfile(result));
     }
     
     const failLoginGoogle = result => {
         console.log(result);
+    }
+
+    const onLogoutGoogle = result => {
+        console.log(result);
+        dispatch(dropProfile());
     }
 
     return(
@@ -28,7 +30,10 @@ const LoginButton = () => {
             onFailure={failLoginGoogle}
             cookiePolicy={'single_host_origin'}
         />:
-        <img style={{width:"50px", height:"50px", borderRadius: "50px"}} src={userProfile.profileObj.imageUrl}/>
+        <div>
+            <img style={{width:"50px", height:"50px", borderRadius: "50px"}} src={userProfile.profileObj.imageUrl}/>
+            <GoogleLogout onLogoutSuccess={onLogoutGoogle}/>
+        </div>
         }
     </div>
     )

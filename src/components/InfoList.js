@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Info from "../atoms/Info";
+import { setClickedRoom } from "../store/modules/ClickedRoom";
 import { setRooms } from "../store/modules/Rooms";
 
 
@@ -29,20 +30,27 @@ function getRoomNames(organization){
 const InfoList = () => {
     const roomList = useSelector(state => state.rooms);
     const organization = useSelector(state => state.organization);
+    const userProfile = useSelector(state => state.userProfile);
+    let setEventComponent = null;
     const dispatch = useDispatch();
     const InfoClick = e => {
         const roomName = e.currentTarget.getElementsByTagName("td")[0].textContent;
         const clickedRoom = roomList.find(room => {return room.name===roomName});
-        console.log(clickedRoom);
+        if (userProfile===null){
+            alert("회의실 예약은 로그인이 필요한 서비스입니다.");
+        }
+        else{
+            console.log(clickedRoom);
+            dispatch(setClickedRoom(clickedRoom.id));
+        }
     }
 
     useEffect(() => {
         const fetchRooms = async() => {
-            console.log("Test");
             const roomNames = getRoomNames(organization);
             const response = await axios.get("http://localhost:8000/event/");
-            const roomList = response.data.filter((room) => (roomNames.includes(room.name)));
-            dispatch(setRooms(roomList));
+            const roomDataList = response.data.filter((room) => (roomNames.includes(room.name)));
+            dispatch(setRooms(roomDataList));
         }
 
         fetchRooms();

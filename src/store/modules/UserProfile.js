@@ -1,5 +1,5 @@
-const SET_PROFILE = "USERPROFILEAction/SET_PROFILE";
-const DROP_PROFILE = "USERPROFILEAction/DROP_PROFILE"
+const SET_PROFILE = "userprofile-action/SET_PROFILE";
+const DROP_PROFILE = "userprofile-action/DROP_PROFILE"
 
 export const setProfile = profile => ({type: SET_PROFILE, profile});
 export const dropProfile = () => ({type: DROP_PROFILE});
@@ -13,6 +13,6 @@ export default function userProfile(state = initState, action){
         case DROP_PROFILE:
             return null;
         default:
-            return initState;
+            return state;
     }
 }
