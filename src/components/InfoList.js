@@ -76,9 +76,7 @@ const InfoList = () => {
             </thead>
             <tbody>
                 {roomList.length>0 && roomList.map(room => {return(
-                <div>
                 <Info room={room} onClick={InfoClick}/>
-                </div>
                 )})}
             </tbody>
         </table>
