@@ -11,7 +11,6 @@ const SidePanel = () => {
             {/* <OrganizationBar /> */}
             <LoginButton />
             <SetEvent />
-            <ColorBar />
         </div>
     )
 };

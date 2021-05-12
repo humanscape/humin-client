@@ -75,7 +75,11 @@ const InfoList = () => {
                 </tr>
             </thead>
             <tbody>
-                {roomList.length>0 && roomList.map(room => {return(<Info room={room} onClick={InfoClick}/>)})}
+                {roomList.length>0 && roomList.map(room => {return(
+                <div>
+                <Info room={room} onClick={InfoClick}/>
+                </div>
+                )})}
             </tbody>
         </table>
     )

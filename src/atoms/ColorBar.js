@@ -4,10 +4,10 @@
 const ColorBar = () => {
     return (
         <div id="ColorBar">
-            <div><div className="Color" style={{backgroundColor: colors[0]}}></div>Disabled</div>
-            <div><div className="Color" style={{backgroundColor: colors[1]}}></div>Avaliable</div>
-            <div><div className="Color" style={{backgroundColor: colors[2]}}></div>Soon</div>
-            <div><div className="Color" style={{backgroundColor: colors[3]}}></div>Started</div>
+            <div className="ColorItem"><div className="Color" style={{backgroundColor: colors[0]}}></div>Disabled</div>
+            <div className="ColorItem"><div className="Color" style={{backgroundColor: colors[1]}}></div>Avaliable</div>
+            <div className="ColorItem"><div className="Color" style={{backgroundColor: colors[2]}}></div>Soon</div>
+            <div className="ColorItem"><div className="Color" style={{backgroundColor: colors[3]}}></div>Started</div>
         </div>
     )
 }
