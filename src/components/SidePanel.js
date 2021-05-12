@@ -8,7 +8,7 @@ import SetEvent from "../atoms/SetEvent";
 const SidePanel = () => {
     return (
         <div id="SidePanel">
-            <OrganizationBar />
+            {/* <OrganizationBar /> */}
             <LoginButton />
             <SetEvent />
             <ColorBar />

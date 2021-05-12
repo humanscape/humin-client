@@ -16,7 +16,7 @@ const SetEvent = () => {
     const roomList = useSelector(state => state.rooms);
     const room = roomList[clickedRoomId-1];
     const [attendees, setAttendees] = useState([]);
-    const timeList = (() => {let result = []; for(let i=0;i<24;i++){const hour=i.toString().padStart(2, '0'); result.push(<option value={hour+":00"}>{hour+":00"}</option>); result.push(<option value={hour+":30"}>{hour+":30"}</option>);} return result;})
+    const timeList = (() => {let result = []; for(let i=0;i<25;i++){const hour=i.toString().padStart(2, '0'); result.push(<option value={hour}>{hour}</option>);} return result;})
     const addAttendees = email => {
         setAttendees(attendees => [...attendees, email+"@humanscape.io"]);
         setAttendText("");
@@ -39,10 +39,10 @@ const SetEvent = () => {
         const event = {
             "summary": document.getElementsByName("summary")[0].value,
             "start": {
-                "dateTime": date+"T"+document.getElementsByName("startTime")[0].value+":00+09:00"
+                "dateTime": date+"T"+document.getElementsByName("startHour")[0].value+":"+document.getElementsByName("startMin")[0].value+":00+09:00"
             },
             "end": {
-                "dateTime": date+"T"+document.getElementsByName("endTime")[0].value+":00+09:00"
+                "dateTime": date+"T"+document.getElementsByName("endHour")[0].value+":"+document.getElementsByName("endMin")[0].value+":00+09:00"
             },
             "attendees": [...attendees, room.calendar_id, userProfile.profileObj.email].map(attend => {return {"email": attend}}),
         }
@@ -65,16 +65,24 @@ const SetEvent = () => {
         <div id="SetEvent">
             {userProfile!=null && room && 
                 <form onSubmit={setEvent}>
-                    <div>{room.name}</div>
-                    제목<input type="text" name="summary" required/><br/>
+                    <div className="Title">{room.name}</div>
+                    <input type="text" name="summary" placeholder="제목" required/><br/>
                     <input type="date" name="date"/><br/>
-                    시작시간 <select name="startTime" required>
+                    <select name="startHour" required>
                         {timeList()}
-                    </select><br/>
-                    완료시간 <select name="endTime" required>
+                    </select>:
+                    <select name="startMin" required>
+                        <option value="00">00</option>
+                        <option value="30">30</option>
+                    </select>~
+                    <select name="endHour" required>
                         {timeList()}
+                    </select>:
+                    <select name="endMin" required>
+                        <option value="00">00</option>
+                        <option value="30">30</option>
                     </select><br/>
-                    참석자<input type="text" name="attendees" onChange={handleAttendText} value={attendText}/><br/>
+                    <input type="text" name="attendees" onChange={handleAttendText} value={attendText} placeholder="참석자 추가"/><br/>
                     <div id="AttendAutocomplateList">
                         {AttendAutocomplateList.length>0 && AttendAutocomplateList}
                     </div>
