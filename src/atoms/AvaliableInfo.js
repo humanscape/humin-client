@@ -42,11 +42,9 @@ const AvaliableInfo = props => {
         const start_time = {
             year: event.start_time.substring(0, 4),
             month: event.start_time.substring(5, 7),
-            day: event.start_time.substring(8, 10),
-            hour: event.start_time.substring(11, 13),
-            min: event.start_time.substring(14, 16),
+            day: event.start_time.substring(8, 10)
         };
-        if (start_time.year===date.getFullYear() && start_time.month===intToString(date.getMonth()+1) && start_time.day===intToString(date.getDate())){
+        if (start_time.year===date.getFullYear().toString() && start_time.month===intToString(date.getMonth()+1) && start_time.day===intToString(date.getDate())){
             return <NotEmptyEvent room={room} onClick={props.onClick}/>
         }
             return <EmptyEvent room={room} onClick={props.onClick}/>
