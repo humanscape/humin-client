@@ -11,17 +11,40 @@ const SetEvent = () => {
     const [attendText, setAttendText] = useState("");
     const [AttendAutocomplateList, setAttendAutocompalteList] = useState([]);
     const startTime = date.getHours();
-    const endTime = 24;
-    // const hourHeightRange = 430/(endTime-startTime);
+    // const startTime = 8;
+    const endTime = 23;
     const hourHeightRange = 50;
-    const height=(endTime-startTime)*50+30+"px";
+    const fifMinRange = Math.round(50/4);
+    const height=(endTime-startTime+1)*50+"px";
     const clickedRoomId = useSelector(state => state.clickedRoom);
     const dispatch = useDispatch();
     const userProfile = useSelector(state => state.userProfile);
     const roomList = useSelector(state => state.rooms);
     const room = roomList[clickedRoomId-1];
-    const [attendees, setAttendees] = useState([]);
+    const timeList = (() => {
+        let result = [];
+        let min=0;
+        let hour=0;
+        let merdiemFlag = false;
+        for(let i=0;i<23*4+4;i++){
+            if(min===60){
+                min=0;
+                hour+=1;
+                if(hour===13){
+                    hour=1;
+                    merdiemFlag=true;
+                }
+            }
+            result.push(((merdiemFlag)?"오후":"오전")+hour+":"+min)
+            min+=15;
+        }
+        return result;
+    })();
 
+    const [attendees, setAttendees] = useState([]);
+    let mousedown = false;
+    let isBeforeSetTime = true;
+    let dragList = [];
 
     const intToString = int => {
         return int.toString().padStart(2, "0");
@@ -30,6 +53,7 @@ const SetEvent = () => {
         dispatch(dropClickedRoom());
         setAttendText("");
         setAttendAutocompalteList([]);   
+        setAttendees([]);
     }
     const addAttendees = email => {
         setAttendees(attendees => [...attendees, email+"@humanscape.io"]);
@@ -49,13 +73,18 @@ const SetEvent = () => {
     }
     const setEvent = async(e) => {
         e.preventDefault();
+        const startHour = Math.floor(document.getElementsByName("startTime")[0].selectedIndex*15/60);
+        const startMin = document.getElementsByName("startTime")[0].selectedIndex*15%60;
+        const endHour = Math.floor(document.getElementsByName("endTime")[0].selectedIndex*15/60);
+        const endMin = document.getElementsByName("endTime")[0].selectedIndex*15%60;
+        
         const event = {
             "summary": document.getElementsByName("summary")[0].value,
             "start": {
-                "dateTime": getFormatDate(date)+"T"+document.getElementsByName("startHour")[0].value+":"+document.getElementsByName("startMin")[0].value+":00+09:00"
+                "dateTime": getFormatDate(date)+"T"+intToString(startHour)+":"+intToString(startMin)+":00+09:00"
             },
             "end": {
-                "dateTime": getFormatDate(date)+"T"+document.getElementsByName("endHour")[0].value+":"+document.getElementsByName("endMin")[0].value+":00+09:00"
+                "dateTime": getFormatDate(date)+"T"+intToString(endHour)+":"+intToString(endMin)+":00+09:00"
             },
             "attendees": [...attendees, room.calendar_id, userProfile.profileObj.email].map(attend => {return {"email": attend}}),
         }
@@ -63,7 +92,7 @@ const SetEvent = () => {
             headers:{
                 "Authorization": "Bearer " + userProfile.tokenObj.access_token
             }
-        }).then(response => {
+        }).then(() => {
             alert("일정 추가 완료");
             closeEventTab();
         }).catch(error => {
@@ -72,10 +101,66 @@ const SetEvent = () => {
         })
     }
 
+    const yRangeClassifier = layerY => {
+        let y = layerY-((layerY-10)%fifMinRange)
+        if ((layerY-10)%fifMinRange>=Math.round(fifMinRange/2)){
+            y+=fifMinRange
+        }
+        return y;
+    }
+
+    const canvasMousedownHandler = e => {
+        if(isBeforeSetTime){
+            mousedown=true;
+            dragList.push(yRangeClassifier(e.layerY))
+        }
+    }
+
+    const canvasMouseupHandler = e => {
+        if(isBeforeSetTime && dragList.length>0){
+            mousedown=false;
+            const startIdx = Math.round((dragList[0]-10)/fifMinRange);
+            const endIdx = Math.round((dragList[dragList.length-1]-10)/fifMinRange);
+            document.getElementsByName("startTime")[0].options[(startTime*4)+startIdx].selected = true;
+            document.getElementsByName("endTime")[0].options[(startTime*4)+endIdx].selected = true;
+            isBeforeSetTime=false;
+        }
+    }
+
+    const canvaseMousemoveHandler = (e, ctx) => {
+        if(mousedown && isBeforeSetTime){
+            const y = yRangeClassifier(e.layerY);
+            if(dragList[dragList.length-2]===y){
+                ctx.fillStyle = "white";
+                const lastY = dragList.pop();
+                if (lastY>dragList[dragList.length-1]){
+                    ctx.fillRect(20, dragList[dragList.length-1], 200, fifMinRange);
+                }
+                else{
+                    ctx.fillRect(20, lastY, 200, fifMinRange);
+                }
+            }
+            else if(dragList[dragList.length-1]!=y){
+                ctx.fillStyle = "#1a73e8";
+                if (y>dragList[dragList.length-1]){
+                    ctx.fillRect(20, dragList[dragList.length-1], 200, fifMinRange);
+                }
+                else{
+                    ctx.fillRect(20, y, 200, fifMinRange);
+                }
+                dragList.push(y);
+            }
+        }
+    }
+
     useEffect(() => {
         if (userProfile!=null && room){
             const canvas = canvasRef.current;
             const ctx = getCTX(canvas);
+            canvas.addEventListener("mousedown", canvasMousedownHandler);
+            canvas.addEventListener("mouseup", (e => {canvasMouseupHandler(e, ctx)}));
+            canvas.addEventListener("mouseout", (e => {canvasMouseupHandler(e, ctx)}));
+            canvas.addEventListener("mousemove", (e => {canvaseMousemoveHandler(e,ctx)}));
             ctx.strokeStyle = "rgba(0, 0, 0, 0.3)";
             ctx.font = "10px gothic";
             for(var i=0; i<endTime-startTime+1; i++){
@@ -111,7 +196,7 @@ const SetEvent = () => {
             }
             ctx.beginPath();
             ctx.moveTo(20, 0);
-            ctx.lineTo(20, 500);
+            ctx.lineTo(20, 1250);
             ctx.closePath();
             ctx.stroke();
         }
@@ -126,6 +211,16 @@ const SetEvent = () => {
                     <div id="EventModal">
                         <div className="Header"><button className="Close" onClick={closeEventTab}>x</button></div>
                         <input type="text" name="summary" placeholder="제목" required/><br/>
+                        <select name="startTime">
+                            {timeList.map((time, idx) => {
+                                return <option value={idx}>{time}</option>
+                            })}
+                        </select>
+                        <select name="endTime">
+                            {timeList.map((time, idx) => {
+                                return <option value={idx}>{time}</option>
+                            })}
+                        </select>
                         <input type="text" name="attendees" onChange={handleAttendText} value={attendText} placeholder="참석자 추가"/><br/>
                         <div id="AttendAutocomplateList">
                             {AttendAutocomplateList.length>0 && AttendAutocomplateList}
