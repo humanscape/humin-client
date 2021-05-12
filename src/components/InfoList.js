@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Info from "../atoms/Info";
+import { setClickedRoom } from "../store/modules/ClickedRoom";
 import { setRooms } from "../store/modules/Rooms";
 
 
@@ -11,66 +12,72 @@ const roomList = {
     mommytalk: ["M1", "M2", "M3"]
 }
 
-async function getRooms(organization){
-    let rooms;
+function getRoomNames(organization){
+    let roomNames;
     if (organization==="all"){
-        rooms = roomList.public.concat(roomList.humanscape, roomList.mommytalk);
+        return roomList.public.concat(roomList.humanscape, roomList.mommytalk);
     }
     else if (organization==="humanscape"){
-        rooms = roomList.public.concat(roomList.humanscape);
+        return roomList.public.concat(roomList.humanscape);
 
     }
     else if (organization==="mommytalk"){
-        rooms = roomList.public.concat(roomList.mommytalk);
+        return roomList.public.concat(roomList.mommytalk);
     }
-    const response = await axios.get("http://localhost:8000/event/");
-    return response.data.filter((room) => (rooms.includes(room.name)));
+    
 }
 
 const InfoList = () => {
     const roomList = useSelector(state => state.rooms);
     const organization = useSelector(state => state.organization);
+    const userProfile = useSelector(state => state.userProfile);
+    let setEventComponent = null;
     const dispatch = useDispatch();
-    const setRoomList = () => {
-        getRooms(organization).then(roomList => {
-            dispatch(setRooms(roomList));
-        })
-    };
-
-const InfoClick = e => {
-    const roomName = e.currentTarget.getElementsByTagName("td")[0].textContent;
-    const clickedRoom = roomList.find(room => {return room.name===roomName});
-    console.log(clickedRoom);
-}
+    const InfoClick = e => {
+        const roomName = e.currentTarget.getElementsByTagName("td")[0].textContent;
+        const clickedRoom = roomList.find(room => {return room.name===roomName});
+        if (userProfile===null){
+            alert("회의실 예약은 로그인이 필요한 서비스입니다.");
+        }
+        else{
+            dispatch(setClickedRoom(clickedRoom.id));
+        }
+    }
 
     useEffect(() => {
-        setRoomList();
+        const fetchRooms = async() => {
+            const roomNames = getRoomNames(organization);
+            const response = await axios.get("http://localhost:8000/event/");
+            const roomDataList = response.data.filter((room) => (roomNames.includes(room.name)));
+            dispatch(setRooms(roomDataList));
+        }
+
+        fetchRooms();
         setInterval(() => {
-            setRoomList();
-        }, 10000);
+            fetchRooms();
+        }, 6000);
     }, [])
 
-        return (
-            <table id="InfoList">
-                <colgroup>
-                    <col width="10%" />
-                    <col width="40%"/>
-                    <col width="40%"/>
-                    <col width="10%" />
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th id="RoomName">공간</th>
-                        <th id="Schedule">일정</th>
-                        <th id="EventSummary">이벤트</th>
-                        <th id="Users">참석자</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {roomList.length>0 && roomList.map(room => {return(<Info room={room} onClick={InfoClick}/>)})}
-                </tbody>
-            </table>
-        )
+    return (
+        <table id="InfoList">
+            <colgroup>
+                <col width="10%" />
+                <col width="40%"/>
+                <col width="40%"/>
+                <col width="10%" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th id="RoomName">공간</th>
+                    <th id="Schedule">일정</th>
+                    <th id="EventSummary">이벤트</th>
+                    <th id="Users">참석자</th>
+                </tr>
+            </thead>
+            <tbody>
+                {roomList.length>0 && roomList.map(room => {return(<Info room={room} onClick={InfoClick}/>)})}
+            </tbody>
+        </table>
+    )
 }
-
 export default InfoList;

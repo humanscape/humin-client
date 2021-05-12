@@ -1,6 +1,4 @@
-import axios from "axios";
-
-const SET_ROOMS = "ROOMSAction/SET_ROOMS";
+const SET_ROOMS = "rooms-action/SET_ROOMS";
 
 export const setRooms = rooms => ({type: SET_ROOMS, rooms});
 
@@ -11,6 +9,6 @@ export default function rooms(state = initState, action){
         case SET_ROOMS:
             return action.rooms;
         default:
-            return initState;
+            return state;
     }
 }
