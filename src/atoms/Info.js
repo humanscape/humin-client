@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import InConferenceInfo from './InConferenceInfo';
 import BookedInfo from './BookedInfo';
 import AvaliableInfo from './AvaliableInfo';
