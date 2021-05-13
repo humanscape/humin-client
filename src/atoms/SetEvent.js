@@ -13,9 +13,9 @@ const SetEvent = () => {
     const startTime = date.getHours();
     // const startTime = 8;
     const endTime = 23;
-    const hourHeightRange = 50;
-    const fifMinRange = Math.round(50/4);
-    const height=(endTime-startTime+1)*50+"px";
+    const hourHeightRange = 60;
+    const fifMinRange = Math.floor(60/4);
+    const height=(endTime-startTime+1)*60+"px";
     const clickedRoomId = useSelector(state => state.clickedRoom);
     const dispatch = useDispatch();
     const userProfile = useSelector(state => state.userProfile);
@@ -103,7 +103,7 @@ const SetEvent = () => {
 
     const yRangeClassifier = layerY => {
         let y = layerY-((layerY-10)%fifMinRange)
-        if ((layerY-10)%fifMinRange>=Math.round(fifMinRange/2)){
+        if ((layerY-10)%fifMinRange>=fifMinRange/2){
             y+=fifMinRange
         }
         return y;
@@ -119,8 +119,8 @@ const SetEvent = () => {
     const canvasMouseupHandler = e => {
         if(isBeforeSetTime && dragList.length>0){
             mousedown=false;
-            const startIdx = Math.round((dragList[0]-10)/fifMinRange);
-            const endIdx = Math.round((dragList[dragList.length-1]-10)/fifMinRange);
+            const startIdx = Math.floor((dragList[0]-10)/fifMinRange);
+            const endIdx = Math.floor((dragList[dragList.length-1]-10)/fifMinRange);
             document.getElementsByName("startTime")[0].options[(startTime*4)+startIdx].selected = true;
             document.getElementsByName("endTime")[0].options[(startTime*4)+endIdx].selected = true;
             isBeforeSetTime=false;
