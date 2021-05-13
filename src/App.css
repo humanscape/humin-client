@@ -248,7 +248,6 @@
   left: 220px;
   z-index: 100;
   width: 300px;
-  height: 200px;
   background-color: white;
   border: solid 1px gray;
 }
@@ -270,9 +269,10 @@
 }
 
 .Submit{
-  position: absolute;
-  bottom: 10px;
-  right: 20px;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  float: right;
+  margin-right: 20px;
   width: 70px;
   height: 30px;
   border: none;
