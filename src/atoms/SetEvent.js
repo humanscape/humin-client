@@ -187,6 +187,13 @@ const SetEvent = () => {
                         const eventEndMin = event.end_time.substring(14,16);
                         const startY = (eventStartHour-startTime)*hourHeightRange+(eventStartMin*hourHeightRange/60)+10;
                         const endY = (eventEndHour-startTime)*hourHeightRange+(eventEndMin*hourHeightRange/60)+10;
+                        ctx.beginPath();
+                        ctx.moveTo(20, startY);
+                        ctx.lineTo(200, startY);
+                        ctx.moveTo(20, endY);
+                        ctx.lineTo(200, endY);
+                        ctx.closePath();
+                        ctx.stroke();
                         const height = endY-startY;
                         ctx.fillRect(20, startY, 200, height);
                         ctx.fillStyle="white";
