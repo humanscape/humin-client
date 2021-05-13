@@ -31,7 +31,6 @@ const InfoList = () => {
     const roomList = useSelector(state => state.rooms);
     const organization = useSelector(state => state.organization);
     const userProfile = useSelector(state => state.userProfile);
-    let setEventComponent = null;
     const dispatch = useDispatch();
     const InfoClick = e => {
         const roomName = e.currentTarget.getElementsByTagName("td")[0].textContent;
@@ -75,7 +74,9 @@ const InfoList = () => {
                 </tr>
             </thead>
             <tbody>
-                {roomList.length>0 && roomList.map(room => {return(<Info room={room} onClick={InfoClick}/>)})}
+                {roomList.length>0 && roomList.map(room => {return(
+                <Info room={room} onClick={InfoClick}/>
+                )})}
             </tbody>
         </table>
     )

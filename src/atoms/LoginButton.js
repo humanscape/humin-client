@@ -38,10 +38,11 @@ const LoginButton = () => {
             onSuccess={onLoginGoogle}
             onFailure={failLoginGoogle}
             cookiePolicy={'single_host_origin'}
+            className="LoginButton"
         />:
         <div>
-            <img style={{width:"50px", height:"50px", borderRadius: "50px"}} src={userProfile.profileObj.imageUrl}/><br/>
-            <GoogleLogout buttonText="Logout" onLogoutSuccess={onLogoutGoogle}/>
+            <img style={{width:"50px", height:"50px", borderRadius: "50px"}} src={userProfile.profileObj.imageUrl}/>
+            <GoogleLogout buttonText="Logout" onLogoutSuccess={onLogoutGoogle} className="LogoutButton"/>
         </div>
         }
     </div>

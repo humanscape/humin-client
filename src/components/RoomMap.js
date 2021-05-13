@@ -2,20 +2,8 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import EventClassifier from "../common/lib/EventClassifier";
 import map from '../common/images/map.png';
+import getCTX from '../common/lib/GetCTX';
 const RoomMap = () => {
-
-    const getCTX = canvas => {
-        var dpr = window.devicePixelRatio || 1;
-        var rect = canvas.getBoundingClientRect();
-
-        canvas.width = rect.width * dpr;
-        canvas.height = rect.height * dpr;
-        var ctx = canvas.getContext('2d');
-
-        ctx.scale(dpr, dpr);
-        return ctx;
-    }
-
     const canvasRef = React.createRef();
     const colors = ["rgba(38, 70, 83, 0.7)", "rgba(42, 157, 143, 0.7)", "rgba(244, 162, 97, 0.7)", "rgba(231, 111, 81, 0.7)"];
     const roomList = useSelector(state => state.rooms);
