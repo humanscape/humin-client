@@ -20,7 +20,7 @@ const RoomMap = () => {
             });
                 const canvas = canvasRef.current;
                 const ctx = getCTX(canvas);
-                ctx.font = "20px gothic";
+                ctx.font = "20px sans-serif, 나눔고딕코딩";
                 //안방
                 ctx.fillStyle = roomState["안방"].color;
                 ctx.fillRect(20, 205, 45, 45);
