@@ -4,10 +4,10 @@
 const ColorBar = () => {
     return (
         <div id="ColorBar">
-            <div className="ColorItem"><div className="Color" style={{backgroundColor: colors[0]}}></div>Disabled</div>
-            <div className="ColorItem"><div className="Color" style={{backgroundColor: colors[1]}}></div>Avaliable</div>
-            <div className="ColorItem"><div className="Color" style={{backgroundColor: colors[2]}}></div>Soon</div>
-            <div className="ColorItem"><div className="Color" style={{backgroundColor: colors[3]}}></div>Started</div>
+            <div className="ColorItem"><div className="Color" style={{backgroundColor: colors[0]}}></div>사용불가</div>
+            <div className="ColorItem"><div className="Color" style={{backgroundColor: colors[1]}}></div>예약가능</div>
+            <div className="ColorItem"><div className="Color" style={{backgroundColor: colors[2]}}></div>곧 사용</div>
+            <div className="ColorItem"><div className="Color" style={{backgroundColor: colors[3]}}></div>회의중</div>
         </div>
     )
 }
