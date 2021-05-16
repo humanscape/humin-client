@@ -28,11 +28,11 @@ const SetEvent = () => {
     const hourHeightRange = 60;
     const fifMinRange = Math.floor(60/4);
     const height=(endTime-startTime+1)*60+"px";
-    const clickedRoomId = useSelector(state => state.clickedRoom);
+    const clickedRoomName = useSelector(state => state.clickedRoom);
     const dispatch = useDispatch();
     const userProfile = useSelector(state => state.userProfile);
     const roomList = useSelector(state => state.rooms);
-    const room = roomList[clickedRoomId-1];
+    const room = roomList.find(room => {return room.name===clickedRoomName});
     const timeList = (() => {
         let result = [];
         let min=0;
@@ -224,7 +224,7 @@ const SetEvent = () => {
             ctx.closePath();
             ctx.stroke();
         }
-    }, [clickedRoomId])
+    }, [clickedRoomName])
 
     return(
         <div id="SetEvent">
