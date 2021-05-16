@@ -45,7 +45,7 @@ const InfoList = () => {
     useEffect(() => {
         const fetchRooms = async() => {
             const roomNames = getRoomNames(organization);
-            const response = await axios.get("http://localhost:8000/event/");
+            const response = await axios.get("http://20.194.27.191:8000/event/");
             const roomDataList = response.data.filter((room) => (roomNames.includes(room.name)));
             dispatch(setRooms(roomDataList));
         }
