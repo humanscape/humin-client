@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Draggable from "react-draggable";
 import { useDispatch, useSelector } from "react-redux";
 import getCTX from "../common/lib/GetCTX";
 import getFormatDate from "../common/lib/GetFormatDate";
@@ -11,7 +12,6 @@ const SetEvent = () => {
     const [attendText, setAttendText] = useState("");
     const [AttendAutocomplateList, setAttendAutocompalteList] = useState([]);
     const startTime = date.getHours();
-    // const startTime = 8;
     const endTime = 23;
     const hourHeightRange = 60;
     const fifMinRange = Math.floor(60/4);
@@ -215,28 +215,30 @@ const SetEvent = () => {
                 <form onSubmit={setEvent}>
                     <div className="Title">{room.name}</div>
                     <canvas id="TimeTable" ref={canvasRef} style={{height: height}}/>
-                    <div id="EventModal">
-                        <div className="Header"><button className="Close" onClick={closeEventTab}>x</button></div>
-                        <input type="text" name="summary" placeholder="제목" required/><br/>
-                        <select name="startTime">
-                            {timeList.map((time, idx) => {
-                                return <option value={idx}>{time}</option>
-                            })}
-                        </select>
-                        <select name="endTime">
-                            {timeList.map((time, idx) => {
-                                return <option value={idx}>{time}</option>
-                            })}
-                        </select>
-                        <input type="text" name="attendees" onChange={handleAttendText} value={attendText} placeholder="참석자 추가"/><br/>
-                        <div id="AttendAutocomplateList">
-                            {AttendAutocomplateList.length>0 && AttendAutocomplateList}
+                    <Draggable>
+                        <div id="EventModal">
+                            <div className="Header"><button className="Close" onClick={closeEventTab}>x</button></div>
+                            <input type="text" name="summary" placeholder="제목" required/><br/>
+                            <select name="startTime">
+                                {timeList.map((time, idx) => {
+                                    return <option value={idx}>{time}</option>
+                                })}
+                            </select>
+                            <select name="endTime">
+                                {timeList.map((time, idx) => {
+                                    return <option value={idx}>{time}</option>
+                                })}
+                            </select>
+                            <input type="text" name="attendees" onChange={handleAttendText} value={attendText} placeholder="참석자 추가"/><br/>
+                            <div id="AttendAutocomplateList">
+                                {AttendAutocomplateList.length>0 && AttendAutocomplateList}
+                            </div>
+                            <div id="AttendeesList">
+                                {attendees.length>0 && attendees.map((attend, key) => {return <div>{attend} <span onClick={() => deleteAttend(key)}>x</span></div>;})}
+                            </div>
+                            <button type="submit" className="Submit">저장</button>
                         </div>
-                        <div id="AttendeesList">
-                            {attendees.length>0 && attendees.map((attend, key) => {return <div>{attend} <span onClick={() => deleteAttend(key)}>x</span></div>;})}
-                        </div>
-                        <button type="submit" className="Submit">저장</button>
-                    </div>
+                    </Draggable>
                 </form>
             }
         </div>
