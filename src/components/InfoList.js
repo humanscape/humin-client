@@ -13,7 +13,6 @@ const roomList = {
 }
 
 function getRoomNames(organization){
-    let roomNames;
     if (organization==="all"){
         return roomList.public.concat(roomList.humanscape, roomList.mommytalk);
     }

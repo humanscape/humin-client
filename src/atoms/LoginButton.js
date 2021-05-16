@@ -9,7 +9,7 @@ const LoginButton = () => {
 
     const onLoginGoogle = result => {
         const domain = result.profileObj.email.split("@")[1];
-        if (domain!="humanscape.io"){
+        if (domain!=="humanscape.io"){
             alert("휴먼스케이프 계정으로만 로그인 가능합니다.");
         }
         else{
@@ -41,7 +41,7 @@ const LoginButton = () => {
             className="LoginButton"
         />:
         <div>
-            <img style={{width:"50px", height:"50px", borderRadius: "50px"}} src={userProfile.profileObj.imageUrl}/>
+            <img style={{width:"50px", height:"50px", borderRadius: "50px"}} src={userProfile.profileObj.imageUrl} alt="user image"/>
             <GoogleLogout buttonText="Logout" onLogoutSuccess={onLogoutGoogle} className="LogoutButton"/>
         </div>
         }

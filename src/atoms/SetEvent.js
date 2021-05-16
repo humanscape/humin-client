@@ -69,7 +69,7 @@ const SetEvent = () => {
         })
     };
     const deleteAttend = key => {
-        setAttendees(attendees.filter((attend, index) => {return index!=key}));
+        setAttendees(attendees.filter((attend, index) => {return index!==key}));
     }
     const setEvent = async(e) => {
         e.preventDefault();
@@ -140,7 +140,7 @@ const SetEvent = () => {
                     ctx.fillRect(20, lastY, 200, fifMinRange);
                 }
             }
-            else if(dragList[dragList.length-1]!=y){
+            else if(dragList[dragList.length-1]!==y){
                 ctx.fillStyle = "#1a73e8";
                 if (y>dragList[dragList.length-1]){
                     ctx.fillRect(20, dragList[dragList.length-1], 200, fifMinRange);
