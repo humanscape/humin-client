@@ -1,7 +1,7 @@
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
 import { dropClickedRoom } from "../store/modules/ClickedRoom";
-import { SETOrganization } from "../store/modules/Organization";
+import { DROPOrganization, SETOrganization } from "../store/modules/Organization";
 import { dropRooms } from "../store/modules/Rooms";
 import { dropProfile, setProfile } from "../store/modules/UserProfile";
 
@@ -26,6 +26,7 @@ const LoginButton = () => {
     }
 
     const onLogoutGoogle = () => {
+        dispatch(DROPOrganization());
         dispatch(dropRooms());
         dispatch(dropRooms());
         dispatch(dropProfile());
