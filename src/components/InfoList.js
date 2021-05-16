@@ -4,9 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Info from "../atoms/Info";
 import { setClickedRoom } from "../store/modules/ClickedRoom";
 import { setRooms } from "../store/modules/Rooms";
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const roomList = {
     public: ["PR", "C1", "C2", "C3", "휴방", "주방"],
