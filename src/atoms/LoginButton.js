@@ -1,6 +1,8 @@
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
 import { dropClickedRoom } from "../store/modules/ClickedRoom";
+import { DROPOrganization, SETOrganization } from "../store/modules/Organization";
+import { dropRooms } from "../store/modules/Rooms";
 import { dropProfile, setProfile } from "../store/modules/UserProfile";
 
 const LoginButton = () => {
@@ -9,21 +11,24 @@ const LoginButton = () => {
 
     const onLoginGoogle = result => {
         const domain = result.profileObj.email.split("@")[1];
-        if (domain!=="humanscape.io"){
-            alert("휴먼스케이프 계정으로만 로그인 가능합니다.");
-        }
-        else{
+        if (domain==="humanscape.io"){
             dispatch(setProfile(result));
-            dispatch(dropClickedRoom());
+            dispatch(SETOrganization("humanscape"));
+        }
+        else if (domain==="mmtalk.kr"){
+            dispatch(setProfile(result));
+            dispatch(SETOrganization("mommytalk"));
         }
     }
     
-    const failLoginGoogle = result => {
-        console.log(result);
+    const failLoginGoogle = () => {
+        alert("로그인 실패");
     }
 
-    const onLogoutGoogle = result => {
-        console.log(result);
+    const onLogoutGoogle = () => {
+        dispatch(DROPOrganization());
+        dispatch(dropRooms());
+        dispatch(dropRooms());
         dispatch(dropProfile());
         dispatch(dropClickedRoom());
     }

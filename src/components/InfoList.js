@@ -2,28 +2,9 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Info from "../atoms/Info";
+import getRoomNames from "../common/lib/GetRoomNames";
 import { setClickedRoom } from "../store/modules/ClickedRoom";
 import { setRooms } from "../store/modules/Rooms";
-
-const roomList = {
-    public: ["PR", "C1", "C2", "C3", "휴방", "주방"],
-    humanscape : ["H1", "H2", "H3", "안방", "골방"],
-    mommytalk: ["M1", "M2", "M3"]
-}
-
-function getRoomNames(organization){
-    if (organization==="all"){
-        return roomList.public.concat(roomList.humanscape, roomList.mommytalk);
-    }
-    else if (organization==="humanscape"){
-        return roomList.public.concat(roomList.humanscape);
-        
-    }
-    else if (organization==="mommytalk"){
-        return roomList.public.concat(roomList.mommytalk);
-    }
-    
-}
 
 const InfoList = () => {
     const roomList = useSelector(state => state.rooms);
@@ -40,20 +21,24 @@ const InfoList = () => {
             dispatch(setClickedRoom(roomName));
         }
     }
+    const fetchRooms = async() => {
+        const roomNames = getRoomNames(organization);
+        const response = await axios.get(process.env.REACT_APP_API_BASE_URL+"event/");
+        const roomDataList = response.data.filter((room) => (roomNames.includes(room.name)));
+        dispatch(setRooms(roomDataList));
+    }
 
     useEffect(() => {
-        const fetchRooms = async() => {
-            const roomNames = getRoomNames(organization);
-            const response = await axios.get(process.env.REACT_APP_API_BASE_URL+"event/");
-            const roomDataList = response.data.filter((room) => (roomNames.includes(room.name)));
-            dispatch(setRooms(roomDataList));
-        }
-
         fetchRooms();
-        setInterval(() => {
-            fetchRooms();
-        }, 6000);
-    }, [])
+        const nowOrg = organization;
+        let getRoomsInterval;
+        if (nowOrg===organization){
+            getRoomsInterval = setInterval(() => {
+                fetchRooms();
+            }, 6000);
+        }
+        return () => clearInterval(getRoomsInterval);
+    }, [organization])
 
     return (
         <table id="InfoList">
