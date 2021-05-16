@@ -7,8 +7,20 @@ import getFormatDate from "../common/lib/GetFormatDate";
 import { dropClickedRoom } from "../store/modules/ClickedRoom";
 
 const SetEvent = () => {
+
+    const getUsers = async() => {
+        let userList = [];
+        await axios.get("http://localhost:8000/user/").then(response => {
+            userList = response.data;
+        }).catch(e => {
+            console.log(e);
+        })
+        return userList;
+    };
+
     const date = new Date();
     const canvasRef = React.createRef();
+    const [userList, setUserList] = useState();
     const [attendText, setAttendText] = useState("");
     const [AttendAutocomplateList, setAttendAutocompalteList] = useState([]);
     const startTime = date.getHours();
@@ -41,6 +53,10 @@ const SetEvent = () => {
         return result;
     })();
 
+    useEffect(() => {
+        getUsers().then(users =>setUserList(users));
+    }, [])
+
     const [attendees, setAttendees] = useState([]);
     let mousedown = false;
     let isBeforeSetTime = true;
@@ -60,13 +76,14 @@ const SetEvent = () => {
         setAttendText("");
         setAttendAutocompalteList([]);
     }
+
     const handleAttendText = e => {
         setAttendText(e.target.value);
-        axios.get("http://localhost:8000/user/search/"+e.target.value+"/").then(response => {
-            setAttendAutocompalteList(response.data.map(user => {return <div onClick={() => addAttendees(user.email)}>{user.email}</div>}));
-        }).catch(e => {
+        if (e.target.value===""){
             setAttendAutocompalteList([]);
-        })
+        }else{
+            setAttendAutocompalteList(userList.filter(user => {return (user.email.includes(e.target.value))}).map(user => {return <div onClick={() => addAttendees(user.email)}>{user.email}</div>}));
+        }
     };
     const deleteAttend = key => {
         setAttendees(attendees.filter((attend, index) => {return index!==key}));
