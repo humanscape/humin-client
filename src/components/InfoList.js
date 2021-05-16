@@ -30,14 +30,14 @@ const InfoList = () => {
     const organization = useSelector(state => state.organization);
     const userProfile = useSelector(state => state.userProfile);
     const dispatch = useDispatch();
+
     const InfoClick = e => {
         const roomName = e.currentTarget.getElementsByTagName("td")[0].textContent;
-        const clickedRoom = roomList.find(room => {return room.name===roomName});
         if (userProfile===null){
             alert("회의실 예약은 로그인이 필요한 서비스입니다.");
         }
         else{
-            dispatch(setClickedRoom(clickedRoom.id));
+            dispatch(setClickedRoom(roomName));
         }
     }
 
