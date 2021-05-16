@@ -34,19 +34,19 @@ const RoomMap = () => {
                 ctx.fillText("골방", 228, 242);
             
                 //M1
-                ctx.fillStyle = colors[0];
+                ctx.fillStyle = roomState["M1"].color;
                 ctx.fillRect(280, 175, 50, 70);
                 ctx.fillStyle = "black";
                 ctx.fillText("M1", 290, 215);
             
                 //M2
-                ctx.fillStyle = colors[0];
+                ctx.fillStyle = roomState["M2"].color;
                 ctx.fillRect(345, 20, 45, 70);
                 ctx.fillStyle = "black";
                 ctx.fillText("M2", 353, 60);
                 
                 //M3
-                ctx.fillStyle = colors[0];
+                ctx.fillStyle = roomState["M3"].color;
                 ctx.fillRect(343, 98, 50, 35)
                 ctx.fillStyle = "black";
                 ctx.fillText("M3", 353, 122);
