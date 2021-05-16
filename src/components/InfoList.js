@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Info from "../atoms/Info";
 import { setClickedRoom } from "../store/modules/ClickedRoom";
 import { setRooms } from "../store/modules/Rooms";
+import dotenv from 'dotenv';
 
+dotenv.config();
 
 const roomList = {
     public: ["PR", "C1", "C2", "C3", "휴방", "주방"],
@@ -18,7 +20,7 @@ function getRoomNames(organization){
     }
     else if (organization==="humanscape"){
         return roomList.public.concat(roomList.humanscape);
-
+        
     }
     else if (organization==="mommytalk"){
         return roomList.public.concat(roomList.mommytalk);
@@ -45,7 +47,7 @@ const InfoList = () => {
     useEffect(() => {
         const fetchRooms = async() => {
             const roomNames = getRoomNames(organization);
-            const response = await axios.get("http://localhost:8000/event/");
+            const response = await axios.get(process.env.REACT_APP_API_BASE_URL+"event/");
             const roomDataList = response.data.filter((room) => (roomNames.includes(room.name)));
             dispatch(setRooms(roomDataList));
         }

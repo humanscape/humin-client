@@ -10,7 +10,7 @@ const SetEvent = () => {
 
     const getUsers = async() => {
         let userList = [];
-        await axios.get("http://localhost:8000/user/").then(response => {
+        await axios.get(process.env.REACT_APP_API_BASE_URL+"user/").then(response => {
             userList = response.data;
         }).catch(e => {
             console.log(e);
