@@ -151,20 +151,20 @@ const SetEvent = () => {
                 ctx.fillStyle = "white";
                 const lastY = dragList.pop();
                 if (lastY>dragList[dragList.length-1]){
-                    ctx.fillRect(25, dragList[dragList.length-1], 200, fifMinRange);
+                    ctx.fillRect(21, dragList[dragList.length-1], 200, fifMinRange);
                 }
                 else{
-                    ctx.fillRect(25, lastY, 200, fifMinRange);
+                    ctx.fillRect(21, lastY, 200, fifMinRange);
                 }
             }
             else if(dragList[dragList.length-1]!==y){
                 ctx.fillStyle = "#1a73e8";
-                ctx.fillRect(25, dragList[0], 200, dragList[dragList.length-1]-dragList[0]);
+                ctx.fillRect(21, dragList[0], 200, dragList[dragList.length-1]-dragList[0]);
                 if (y>dragList[dragList.length-1]){
-                    ctx.fillRect(25, dragList[dragList.length-1], 200, fifMinRange);
+                    ctx.fillRect(21, dragList[dragList.length-1], 200, fifMinRange);
                 }
                 else{
-                    ctx.fillRect(25, y, 200, fifMinRange);
+                    ctx.fillRect(21, y, 200, fifMinRange);
                 }
                 dragList.push(y);
             }
