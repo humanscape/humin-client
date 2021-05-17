@@ -11,7 +11,7 @@ const BookedInfo = props => {
             <td>
                 <h3>{room.name}</h3>
             </td>
-            <td><b>{Math.floor((start_time_stamp-now_stamp)/1000/60)}</b> 분 후 시작</td>
+            <td><b>{Math.floor((start_time_stamp-now_stamp)/1000/60)}</b>분 후 시작</td>
             <td>{event.summary}</td>
             <td><UserDropdown users={users}/></td>
         </tr>
