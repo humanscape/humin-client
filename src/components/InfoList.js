@@ -29,15 +29,13 @@ const InfoList = () => {
     }
 
     useEffect(() => {
-        fetchRooms();
-        const nowOrg = organization;
-        let getRoomsInterval;
-        if (nowOrg===organization){
-            getRoomsInterval = setInterval(() => {
+        if (organization!=="none"){
+            fetchRooms();
+            const getRoomsInterval = setInterval(() => {
                 fetchRooms();
             }, 6000);
+            return () => clearInterval(getRoomsInterval);
         }
-        return () => clearInterval(getRoomsInterval);
     }, [organization])
 
     return (
