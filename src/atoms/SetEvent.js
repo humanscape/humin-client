@@ -145,8 +145,13 @@ const SetEvent = () => {
         }
     }
 
+    const validateEmail = email => {
+        var re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    }
+
     const handlePressEnter = e => {
-        if(e.key==="Enter"){
+        if(e.key==="Enter" && validateEmail(attendText)){
             addAttendees(attendText);
             setAttendText("");
         }
@@ -239,7 +244,7 @@ const SetEvent = () => {
     return(
         <div id="SetEvent">
             {userProfile!=null && room && 
-                <form onSubmit={setEvent}>
+                <form>
                     <div className="Title">{room.name}</div>
                     <canvas id="TimeTable" ref={canvasRef} style={{height: height}}/>
                     <Draggable>
@@ -256,7 +261,6 @@ const SetEvent = () => {
                                     return <option value={idx}>{time}</option>
                                 })}
                             </select>
-                            <input type="hidden"/>
                             <input type="text" name="attendees" onKeyPress={handlePressEnter} onChange={handleAttendText} value={attendText} placeholder="참석자 추가" autocomplete="off"/><br/>
                             <div id="AttendAutocomplateList">
                                 {AttendAutocomplateList.length>0 && AttendAutocomplateList}
@@ -264,7 +268,7 @@ const SetEvent = () => {
                             <div id="AttendeesList">
                                 {attendees.length>0 && attendees.map((attend, key) => {return <div>{attend} <span onClick={() => deleteAttend(key)}>x</span></div>;})}
                             </div>
-                            <button type="submit" className="Submit">저장</button>
+                            <button type="button" className="Submit" onClick={setEvent}>저장</button>
                         </div>
                     </Draggable>
                 </form>
