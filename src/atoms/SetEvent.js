@@ -7,17 +7,6 @@ import getFormatDate from "../common/lib/GetFormatDate";
 import { dropClickedRoom } from "../store/modules/ClickedRoom";
 
 const SetEvent = () => {
-
-    const getUsers = async() => {
-        let userList = [];
-        await axios.get(process.env.REACT_APP_API_BASE_URL+"user/").then(response => {
-            userList = response.data;
-        }).catch(e => {
-            console.log(e);
-        })
-        return userList;
-    };
-
     const date = new Date();
     const canvasRef = React.createRef();
     const [userList, setUserList] = useState();
@@ -31,6 +20,7 @@ const SetEvent = () => {
     const clickedRoomName = useSelector(state => state.clickedRoom);
     const dispatch = useDispatch();
     const userProfile = useSelector(state => state.userProfile);
+    const organization = userProfile.profileObj.email.split("@")[1];
     const roomList = useSelector(state => state.rooms);
     const room = roomList.find(room => {return room.name===clickedRoomName});
     const timeList = (() => {
@@ -52,6 +42,16 @@ const SetEvent = () => {
         }
         return result;
     })();
+    
+    const getUsers = async() => {
+        let userList = [];
+        await axios.get(process.env.REACT_APP_API_BASE_URL+"user/organization/"+organization+"/").then(response => {
+            userList = response.data;
+        }).catch(e => {
+            console.log(e);
+        })
+        return userList;
+    };
 
     useEffect(() => {
         getUsers().then(users =>setUserList(users));
@@ -72,7 +72,7 @@ const SetEvent = () => {
         setAttendees([]);
     }
     const addAttendees = email => {
-        setAttendees(attendees => [...attendees, email+"@humanscape.io"]);
+        setAttendees(attendees => [...attendees, email]);
         setAttendText("");
         setAttendAutocompalteList([]);
     }
@@ -82,9 +82,10 @@ const SetEvent = () => {
         if (e.target.value===""){
             setAttendAutocompalteList([]);
         }else{
-            setAttendAutocompalteList(userList.filter(user => {return (user.email.includes(e.target.value))}).map(user => {return <div onClick={() => addAttendees(user.email)}>{user.email}</div>}));
+            setAttendAutocompalteList(userList.filter(user => {return (user.email.includes(e.target.value))}).map(user => {return <div onClick={() => addAttendees(user.email+"@"+organization)}>{user.email}</div>}));
         }
     };
+
     const deleteAttend = key => {
         setAttendees(attendees.filter((attend, index) => {return index!==key}));
     }
@@ -142,6 +143,19 @@ const SetEvent = () => {
             document.getElementsByName("endTime")[0].options[(startTime*4)+endIdx].selected = true;
             isBeforeSetTime=false;
         }
+    }
+
+    const validateEmail = email => {
+        var re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    }
+
+    const handlePressEnter = e => {
+        if(e.key==="Enter" && validateEmail(attendText)){
+            addAttendees(attendText);
+            setAttendText("");
+        }
+        return false;
     }
 
     const canvaseMousemoveHandler = (e, ctx) => {
@@ -230,12 +244,12 @@ const SetEvent = () => {
     return(
         <div id="SetEvent">
             {userProfile!=null && room && 
-                <form onSubmit={setEvent}>
+                <form>
                     <div className="Title">{room.name}</div>
                     <canvas id="TimeTable" ref={canvasRef} style={{height: height}}/>
                     <Draggable>
                         <div id="EventModal">
-                            <div className="Header"><button className="Close" onClick={closeEventTab}>x</button></div>
+                            <div className="Header"><button type="button" className="Close" onClick={closeEventTab}>x</button></div>
                             <input type="text" name="summary" placeholder="제목" required/><br/>
                             <select name="startTime">
                                 {timeList.map((time, idx) => {
@@ -247,14 +261,14 @@ const SetEvent = () => {
                                     return <option value={idx}>{time}</option>
                                 })}
                             </select>
-                            <input type="text" name="attendees" onChange={handleAttendText} value={attendText} placeholder="참석자 추가"/><br/>
+                            <input type="text" name="attendees" onKeyPress={handlePressEnter} onChange={handleAttendText} value={attendText} placeholder="참석자 추가" autocomplete="off"/><br/>
                             <div id="AttendAutocomplateList">
                                 {AttendAutocomplateList.length>0 && AttendAutocomplateList}
                             </div>
                             <div id="AttendeesList">
                                 {attendees.length>0 && attendees.map((attend, key) => {return <div>{attend} <span onClick={() => deleteAttend(key)}>x</span></div>;})}
                             </div>
-                            <button type="submit" className="Submit">저장</button>
+                            <button type="button" className="Submit" onClick={setEvent}>저장</button>
                         </div>
                     </Draggable>
                 </form>
