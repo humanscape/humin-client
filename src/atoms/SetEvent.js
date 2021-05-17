@@ -144,6 +144,13 @@ const SetEvent = () => {
         }
     }
 
+    const handlePressEnter = e => {
+        if(e.keyCode===13){
+            setAttendees(attendText);
+            setAttendText("");
+        }
+    }
+
     const canvaseMousemoveHandler = (e, ctx) => {
         if(mousedown && isBeforeSetTime){
             const y = yRangeClassifier(e.layerY);
@@ -247,7 +254,7 @@ const SetEvent = () => {
                                     return <option value={idx}>{time}</option>
                                 })}
                             </select>
-                            <input type="text" name="attendees" onChange={handleAttendText} value={attendText} placeholder="참석자 추가"/><br/>
+                            <input type="text" name="attendees" onKeyPress={handlePressEnter} onChange={handleAttendText} value={attendText} placeholder="참석자 추가"/><br/>
                             <div id="AttendAutocomplateList">
                                 {AttendAutocomplateList.length>0 && AttendAutocomplateList}
                             </div>
