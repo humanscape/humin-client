@@ -7,6 +7,9 @@ import getFormatDate from "../common/lib/GetFormatDate";
 import { dropClickedRoom } from "../store/modules/ClickedRoom";
 
 const SetEvent = () => {
+    const intToString = int => {
+        return int.toString().padStart(2, "0");
+    }
     const date = new Date();
     const canvasRef = React.createRef();
     const [userList, setUserList] = useState();
@@ -37,7 +40,7 @@ const SetEvent = () => {
                     merdiemFlag=true;
                 }
             }
-            result.push(((merdiemFlag)?"오후":"오전")+hour+":"+min)
+            result.push(((merdiemFlag)?"오후":"오전")+hour+":"+intToString(min))
             min+=15;
         }
         return result;
@@ -61,10 +64,6 @@ const SetEvent = () => {
     let mousedown = false;
     let isBeforeSetTime = true;
     let dragList = [];
-
-    const intToString = int => {
-        return int.toString().padStart(2, "0");
-    }
     const closeEventTab = () => {
         dispatch(dropClickedRoom());
         setAttendText("");
@@ -165,20 +164,20 @@ const SetEvent = () => {
                 ctx.fillStyle = "white";
                 const lastY = dragList.pop();
                 if (lastY>dragList[dragList.length-1]){
-                    ctx.fillRect(21, dragList[dragList.length-1], 200, fifMinRange);
+                    ctx.fillRect(41, dragList[dragList.length-1], 200, fifMinRange);
                 }
                 else{
-                    ctx.fillRect(21, lastY, 200, fifMinRange);
+                    ctx.fillRect(41, lastY, 200, fifMinRange);
                 }
             }
             else if(dragList[dragList.length-1]!==y){
                 ctx.fillStyle = "#1a73e8";
-                ctx.fillRect(21, dragList[0], 200, dragList[dragList.length-1]-dragList[0]);
+                ctx.fillRect(41, dragList[0], 200, dragList[dragList.length-1]-dragList[0]);
                 if (y>dragList[dragList.length-1]){
-                    ctx.fillRect(21, dragList[dragList.length-1], 200, fifMinRange);
+                    ctx.fillRect(41, dragList[dragList.length-1], 200, fifMinRange);
                 }
                 else{
-                    ctx.fillRect(21, y, 200, fifMinRange);
+                    ctx.fillRect(41, y, 200, fifMinRange);
                 }
                 dragList.push(y);
             }
@@ -195,14 +194,18 @@ const SetEvent = () => {
             canvas.addEventListener("mousemove", (e => {canvaseMousemoveHandler(e,ctx)}));
             ctx.strokeStyle = "rgba(0, 0, 0, 0.3)";
             ctx.font = "10px gothic";
+            let merdiemFlag=false;
             for(var i=0; i<endTime-startTime+1; i++){
                 const y = (i*hourHeightRange)+10;
                 ctx.beginPath();
-                ctx.moveTo(20, y);
+                ctx.moveTo(40, y);
                 ctx.lineTo(200, y);
                 ctx.closePath();
                 ctx.stroke();
-                ctx.fillText(startTime+i+"시", 0, y+5);
+                if ((startTime+i)>12){
+                    merdiemFlag=true;
+                }
+                ctx.fillText(((merdiemFlag)?"오후":"오전")+((merdiemFlag)?startTime+i-12:startTime+i)+"시", 0, y+5);
             }
             if (room.events.length>0){
                 room.events.forEach(event=>{
@@ -220,22 +223,22 @@ const SetEvent = () => {
                         const startY = (eventStartHour-startTime)*hourHeightRange+(eventStartMin*hourHeightRange/60)+10;
                         const endY = (eventEndHour-startTime)*hourHeightRange+(eventEndMin*hourHeightRange/60)+10;
                         ctx.beginPath();
-                        ctx.moveTo(20, startY);
+                        ctx.moveTo(40, startY);
                         ctx.lineTo(200, startY);
-                        ctx.moveTo(20, endY);
+                        ctx.moveTo(40, endY);
                         ctx.lineTo(200, endY);
                         ctx.closePath();
                         ctx.stroke();
                         const height = endY-startY;
-                        ctx.fillRect(20, startY, 200, height);
+                        ctx.fillRect(40, startY, 200, height);
                         ctx.fillStyle="white";
                         ctx.fillText(event.summary, 30, startY+(height/2));
                     }
                 })
             }
             ctx.beginPath();
-            ctx.moveTo(20, 0);
-            ctx.lineTo(20, 1250);
+            ctx.moveTo(40, 0);
+            ctx.lineTo(40, 1250);
             ctx.closePath();
             ctx.stroke();
         }
