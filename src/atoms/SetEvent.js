@@ -71,7 +71,9 @@ const SetEvent = () => {
         setAttendees([]);
     }
     const addAttendees = user => {
-        setAttendees(attendees => [...attendees, user]);
+        if(user.email!==userProfile.profileObj.email && !attendees.some(attend => attend.email===user.email)){
+            setAttendees(attendees => [...attendees, user]);
+        }
         setAttendText("");
         setAttendAutocompalteList([]);
     }
