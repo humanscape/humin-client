@@ -70,8 +70,8 @@ const SetEvent = () => {
         setAttendAutocompalteList([]);   
         setAttendees([]);
     }
-    const addAttendees = email => {
-        setAttendees(attendees => [...attendees, email]);
+    const addAttendees = user => {
+        setAttendees(attendees => [...attendees, user]);
         setAttendText("");
         setAttendAutocompalteList([]);
     }
@@ -81,7 +81,7 @@ const SetEvent = () => {
         if (e.target.value===""){
             setAttendAutocompalteList([]);
         }else{
-            setAttendAutocompalteList(userList.filter(user => {return (user.email.includes(e.target.value))}).map(user => {return <div onClick={() => addAttendees(user.email+"@"+organization)}>{user.email}</div>}));
+            setAttendAutocompalteList(userList.filter(user => {return (user.name.includes(e.target.value))}).map(user => {return <div onClick={() => addAttendees({name: user.name, email: user.email+"@"+organization})}>{user.name}({user.email}@{organization})</div>}));
         }
     };
 
@@ -103,7 +103,7 @@ const SetEvent = () => {
             "end": {
                 "dateTime": getFormatDate(date)+"T"+intToString(endHour)+":"+intToString(endMin)+":00+09:00"
             },
-            "attendees": [...attendees, room.calendar_id, userProfile.profileObj.email].map(attend => {return {"email": attend}}),
+            "attendees": [...attendees, {email: room.calendar_id}, {email: userProfile.profileObj.email}].map(attend => {return {"email": attend.email}}).concat([]),
         }
         await axios.post("https://www.googleapis.com/calendar/v3/calendars/"+userProfile.profileObj.email+"/events", event,{
             headers:{
@@ -151,7 +151,7 @@ const SetEvent = () => {
 
     const handlePressEnter = e => {
         if(e.key==="Enter" && validateEmail(attendText)){
-            addAttendees(attendText);
+            addAttendees({email: attendText});
             setAttendText("");
         }
         return false;
@@ -264,12 +264,12 @@ const SetEvent = () => {
                                     return <option value={idx}>{time}</option>
                                 })}
                             </select>
-                            <input type="text" name="attendees" onKeyPress={handlePressEnter} onChange={handleAttendText} value={attendText} placeholder="참석자 추가" autocomplete="off"/><br/>
+                            <input type="text" name="attendees" onKeyPress={handlePressEnter} onChange={handleAttendText} value={attendText} placeholder="참석자 추가" autoComplete="off"/><br/>
                             <div id="AttendAutocomplateList">
                                 {AttendAutocomplateList.length>0 && AttendAutocomplateList}
                             </div>
                             <div id="AttendeesList">
-                                {attendees.length>0 && attendees.map((attend, key) => {return <div>{attend} <span onClick={() => deleteAttend(key)}>x</span></div>;})}
+                                {attendees.length>0 && attendees.map((attend, key) => {return <div>{(attend.name)?attend.name+"("+attend.email+")":attend.email} <span onClick={() => deleteAttend(key)}>x</span></div>;})}
                             </div>
                             <button type="button" className="Submit" onClick={setEvent}>저장</button>
                         </div>
