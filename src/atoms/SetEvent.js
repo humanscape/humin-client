@@ -234,7 +234,7 @@ const SetEvent = () => {
                         const height = endY-startY;
                         ctx.fillRect(40, startY, 200, height);
                         ctx.fillStyle="white";
-                        ctx.fillText(event.summary, 30, startY+(height/2));
+                        ctx.fillText(event.summary, 50, startY+(height/2));
                     }
                 })
             }
