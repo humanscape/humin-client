@@ -189,23 +189,25 @@
   border: none;
   border-bottom: solid 1px black;
   margin-top: 10px;
-  width: 170px;
+  width: 250px;
 }
 
 #SetEvent select{
   border-radius: 10px;
   margin: 0 2px;
   margin-top: 10px;
+  width: 100px;
 }
 
 #AttendAutocomplateList{
   position: absolute;
-  margin-left: 65px;
-  width: 150px;
+  margin-left: 100px;
+  width: 250px;
   background-color: #ECEFF1;
 }
 
 #AttendAutocomplateList div{
+  font-size: 13px;
   border-bottom: solid 1px #CFD8DC;
   height: 25px;
   line-height: 25px;
@@ -217,13 +219,13 @@
 
 #AttendeesList{
   margin-top: 5px;
-  margin-left: 45px;
+  margin-left: 85px;
   font-size: 13px;
 }
 
 #AttendeesList div{
   margin-top: 5px;
-  width: 170px;
+  width: 250px;
   height: 20px;
   background-color: #e5e5e5;
   border-radius: 150px;
@@ -247,7 +249,7 @@
   top: 100px;
   left: 220px;
   z-index: 100;
-  width: 300px;
+  width: 450px;
   background-color: white;
   border: solid 1px gray;
 }
