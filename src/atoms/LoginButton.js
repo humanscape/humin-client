@@ -28,7 +28,6 @@ const LoginButton = () => {
     const onLogoutGoogle = () => {
         dispatch(DROPOrganization());
         dispatch(dropRooms());
-        dispatch(dropRooms());
         dispatch(dropProfile());
         dispatch(dropClickedRoom());
     }
