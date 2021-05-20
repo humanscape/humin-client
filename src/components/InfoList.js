@@ -24,13 +24,7 @@ const InfoList = () => {
     const fetchRooms = async() => {
         const roomNames = getRoomNames(organization);
         const response = await axios.get(process.env.REACT_APP_API_BASE_URL+"event/");
-<<<<<<< Updated upstream
         const roomDataList = response.data.filter((room) => (roomNames.includes(room.name)));
-=======
-        const roomDataList = response.data.filter((room) => {
-                return roomNames.includes(room.name)
-            });
->>>>>>> Stashed changes
         dispatch(setRooms(roomDataList));
     }
 
