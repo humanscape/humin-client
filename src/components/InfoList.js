@@ -5,6 +5,7 @@ import Info from "../atoms/Info";
 import getRoomNames from "../common/lib/GetRoomNames";
 import { setClickedRoom } from "../store/modules/ClickedRoom";
 import { setRooms } from "../store/modules/Rooms";
+import { dropProfile } from "../store/modules/UserProfile";
 
 const InfoList = () => {
     const roomList = useSelector(state => state.rooms);
@@ -24,7 +25,11 @@ const InfoList = () => {
     const fetchRooms = async() => {
         const roomNames = getRoomNames(organization);
         const response = await axios.get(process.env.REACT_APP_API_BASE_URL+"event/");
-        const roomDataList = response.data.filter((room) => (roomNames.includes(room.name)));
+        const roomDataList = response.data.filter((room) => {
+                return roomNames.includes(room.name) && room.events.every(event => {
+                    return Date.parse(event.end_time)>Date.parse(new Date());
+                })
+            });
         dispatch(setRooms(roomDataList));
     }
 
@@ -33,6 +38,9 @@ const InfoList = () => {
             fetchRooms();
             const getRoomsInterval = setInterval(() => {
                 fetchRooms();
+                if (userProfile.tokenObj.expires_at<Date.parse(new Date())){
+                    dispatch(dropProfile());
+                }
             }, 6000);
             return () => clearInterval(getRoomsInterval);
         }
