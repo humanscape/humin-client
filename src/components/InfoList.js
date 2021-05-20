@@ -3,8 +3,9 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Info from "../atoms/Info";
 import getRoomNames from "../common/lib/GetRoomNames";
-import { setClickedRoom } from "../store/modules/ClickedRoom";
-import { setRooms } from "../store/modules/Rooms";
+import { dropClickedRoom, setClickedRoom } from "../store/modules/ClickedRoom";
+import { DROPOrganization } from "../store/modules/Organization";
+import { dropRooms, setRooms } from "../store/modules/Rooms";
 import { dropProfile } from "../store/modules/UserProfile";
 
 const InfoList = () => {
@@ -39,7 +40,10 @@ const InfoList = () => {
             const getRoomsInterval = setInterval(() => {
                 fetchRooms();
                 if (userProfile.tokenObj.expires_at<Date.parse(new Date())){
+                    dispatch(DROPOrganization());
+                    dispatch(dropRooms());
                     dispatch(dropProfile());
+                    dispatch(dropClickedRoom());
                 }
             }, 6000);
             return () => clearInterval(getRoomsInterval);
