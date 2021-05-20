@@ -43,6 +43,7 @@ const LoginButton = () => {
             onFailure={failLoginGoogle}
             cookiePolicy={'single_host_origin'}
             className="LoginButton"
+            isSignedIn={true}
         />:
         <div>
             <img style={{width:"50px", height:"50px", borderRadius: "50px"}} src={userProfile.profileObj.imageUrl} alt="user image"/>

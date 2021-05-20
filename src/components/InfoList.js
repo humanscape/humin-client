@@ -3,10 +3,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Info from "../atoms/Info";
 import getRoomNames from "../common/lib/GetRoomNames";
-import { dropClickedRoom, setClickedRoom } from "../store/modules/ClickedRoom";
-import { DROPOrganization } from "../store/modules/Organization";
-import { dropRooms, setRooms } from "../store/modules/Rooms";
-import { dropProfile } from "../store/modules/UserProfile";
+import { setClickedRoom } from "../store/modules/ClickedRoom";
+import { setRooms } from "../store/modules/Rooms";
 
 const InfoList = () => {
     const roomList = useSelector(state => state.rooms);
@@ -26,11 +24,7 @@ const InfoList = () => {
     const fetchRooms = async() => {
         const roomNames = getRoomNames(organization);
         const response = await axios.get(process.env.REACT_APP_API_BASE_URL+"event/");
-        const roomDataList = response.data.filter((room) => {
-                return roomNames.includes(room.name) && room.events.every(event => {
-                    return Date.parse(event.end_time)>Date.parse(new Date());
-                })
-            });
+        const roomDataList = response.data.filter((room) => (roomNames.includes(room.name)));
         dispatch(setRooms(roomDataList));
     }
 
@@ -39,12 +33,6 @@ const InfoList = () => {
             fetchRooms();
             const getRoomsInterval = setInterval(() => {
                 fetchRooms();
-                if (userProfile.tokenObj.expires_at<Date.parse(new Date())){
-                    dispatch(DROPOrganization());
-                    dispatch(dropRooms());
-                    dispatch(dropProfile());
-                    dispatch(dropClickedRoom());
-                }
             }, 6000);
             return () => clearInterval(getRoomsInterval);
         }
