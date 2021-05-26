@@ -1,5 +1,6 @@
 import GoogleLogin, { GoogleLogout } from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
+import { dropToken, setToken } from "../store/modules/AccessToken";
 import { dropClickedRoom } from "../store/modules/ClickedRoom";
 import { DROPOrganization, SETOrganization } from "../store/modules/Organization";
 import { dropRooms } from "../store/modules/Rooms";
@@ -9,16 +10,29 @@ const LoginButton = () => {
     const userProfile = useSelector(state => state.userProfile);
     const dispatch = useDispatch();
 
-    const onLoginGoogle = result => {
-        const domain = result.profileObj.email.split("@")[1];
+    const refreshTokenSetup = response => {
+        let refreshTiming = (response.tokenObj.expires_in || 3600 - 5 * 60) * 1000;
+        const refreshToken = async() => {
+            const newAuthRes = await response.reloadAuthResponse();
+            refreshTiming = (newAuthRes.expires_in || 3600 - 5 * 60) * 1000;
+            dispatch(setToken(newAuthRes.accessToken));
+
+            setTimeout(refreshToken, refreshTiming);
+        }
+        setTimeout(refreshToken, refreshTiming);
+    }
+
+    const onLoginGoogle = response => {
+        const domain = response.profileObj.email.split("@")[1];
+        dispatch(setProfile(response));
+        dispatch(setToken(response.tokenObj.access_token))
         if (domain==="humanscape.io"){
-            dispatch(setProfile(result));
             dispatch(SETOrganization("humanscape"));
         }
         else if (domain==="mmtalk.kr"){
-            dispatch(setProfile(result));
             dispatch(SETOrganization("mommytalk"));
         }
+        refreshTokenSetup(response);
     }
     
     const failLoginGoogle = () => {
@@ -30,6 +44,7 @@ const LoginButton = () => {
         dispatch(dropRooms());
         dispatch(dropProfile());
         dispatch(dropClickedRoom());
+        dispatch(dropToken());
     }
 
     return(
