@@ -21,7 +21,6 @@ const SetEvent = () => {
     const fifMinRange = Math.floor(60/4);
     const height=(endTime-startTime+1)*60+"px";
     const clickedRoomName = useSelector(state => state.clickedRoom);
-    const accessToken = useSelector(state => state.accessToken);
     const dispatch = useDispatch();
     const userProfile = useSelector(state => state.userProfile);
     const organization = userProfile.profileObj.email.split("@")[1];
@@ -108,9 +107,10 @@ const SetEvent = () => {
             },
             "attendees": [...attendees, {email: room.calendar_id}, {email: userProfile.profileObj.email}].map(attend => {return {"email": attend.email}}).concat([]),
         }
+        const newAuthRes = await userProfile.reloadAuthResponse();
         await axios.post("https://www.googleapis.com/calendar/v3/calendars/"+userProfile.profileObj.email+"/events", event,{
             headers:{
-                "Authorization": "Bearer " + accessToken
+                "Authorization": "Bearer " + newAuthRes.access_token
             }
         }).then(() => {
             alert("일정 추가 완료");
