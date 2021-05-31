@@ -38,7 +38,7 @@ const RoomMap = () => {
         });
         const canvas = canvasRef.current;
         const ctx = getCTX(canvas);
-        ctx.font = "20px sans-serif, 나눔고딕코딩";
+        ctx.font = "18px sans-serif, 나눔고딕코딩";
         allRoomNameList.forEach(roomName => {
             if (!Object.keys(roomState).includes(roomName)){
                 roomState[roomName] = {color: colors[0]};
