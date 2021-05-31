@@ -25,7 +25,6 @@ const RoomMap = () => {
         휴먼: [20, 280, 320, 480]
     }
     const roomList = useSelector(state => state.rooms);
-    const organization = useSelector(state => state.organization);
     const allRoomNameList = ['안방','골방','M1', 'M2', 'M3', 'H1', 'H2', 'H3', 'PR', '주방', 'C1', 'C2', 'C3', '휴방', '마미톡', '휴먼'];
     const roomState = {};
     useEffect(() => {        
@@ -53,7 +52,7 @@ const RoomMap = () => {
             }
             ctx.fillText(roomName, textLocation.x, textLocation.y);
         })
-    },[roomList, organization]);
+    },[roomList]);
 
     return (
         <div id="RoomMap">
