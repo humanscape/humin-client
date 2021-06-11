@@ -22,19 +22,24 @@ $ rpm --import https://dl.yarnpkg.com/rpm/pubkey.gpg
 $ dnf install yarn
 ```
 
-4. 라이브러리 설치
+4. repo clone
+```
+$ git clone https://github.com/humanscape/humin-client.git
+```
+
+5. 라이브러리 설치
 ```
 $ yarn install
 ```
 
-5. build
+6. build
 ```
 $ yarn build
 ```
 
 메모리 관련 오류 시 로컬에서 빌드 해 업로드 진행
 
-6. nginx에 적용
+7. nginx에 적용
 ```
 $ cp -R build/* /usr/share/nginx/html/
 ```
