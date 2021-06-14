@@ -3,7 +3,7 @@ import ColorBar from "../atoms/ColorBar";
 import RoomMap from "../components/RoomMap";
 import SidePanel from "../components/SidePanel";
 
-class MainPage extends React.Component {
+class Main extends React.Component {
     render() {
         return (
             <div id="MainPage">
@@ -15,4 +15,4 @@ class MainPage extends React.Component {
     }
 }
 
-export default MainPage;
+export default Main;

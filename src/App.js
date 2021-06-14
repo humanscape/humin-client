@@ -1,11 +1,11 @@
 import './App.css';
-import MainPage from './containers/MainPage';
+import Main from './containers/Main';
 import InfoList from './containers/InfoList';
 
 function App() {
   return (
     <div className="App">
-      <MainPage/>
+      <Main/>
       <InfoList/>
     </div>
   );
