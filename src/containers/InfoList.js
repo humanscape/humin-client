@@ -39,27 +39,29 @@ const InfoList = () => {
     }, [organization])
 
     return (
-        <table id="InfoList">
-            <colgroup>
-                <col width="10%" />
-                <col width="40%"/>
-                <col width="40%"/>
-                <col width="10%" />
-            </colgroup>
-            <thead>
-                <tr>
-                    <th id="RoomName">공간</th>
-                    <th id="Schedule">일정</th>
-                    <th id="EventSummary">이벤트</th>
-                    <th id="Users">참석자</th>
-                </tr>
-            </thead>
-            <tbody>
-                {roomList.length>0 && roomList.map(room => {return(
-                <Info room={room} onClick={InfoClick}/>
-                )})}
-            </tbody>
-        </table>
+        <div id="InfoPage">
+            <table id="InfoList">
+                <colgroup>
+                    <col width="10%" />
+                    <col width="40%"/>
+                    <col width="40%"/>
+                    <col width="10%" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th id="RoomName">공간</th>
+                        <th id="Schedule">일정</th>
+                        <th id="EventSummary">이벤트</th>
+                        <th id="Users">참석자</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {roomList.length>0 && roomList.map(room => {return(
+                    <Info room={room} onClick={InfoClick}/>
+                    )})}
+                </tbody>
+            </table>
+        </div>
     )
 }
 export default InfoList;
