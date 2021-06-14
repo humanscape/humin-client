@@ -126,6 +126,15 @@ const TimeTable = props => {
         ctx.lineTo(40, 1650);
         ctx.closePath();
         ctx.stroke();
+        ctx.beginPath();
+
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 2;
+        const nowY = (date.getHours()-startTime)*hourHeightRange+(date.getMinutes()*hourHeightRange/60)+10;
+        ctx.moveTo(40, nowY);
+        ctx.lineTo(200, nowY);
+        ctx.closePath();
+        ctx.stroke();
     }, [props.room.name])
 
     return(<canvas id="TimeTable" ref={canvasRef} style={{height: height}}/>);
