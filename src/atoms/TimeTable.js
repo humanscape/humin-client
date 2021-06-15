@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import getCTX from "../common/lib/GetCTX";
 
 const TimeTable = props => {
     const intToString = int => {
         return int.toString().padStart(2, "0");
     }
-    const date = new Date();
     const canvasRef = React.createRef();
     const startTime = 0;
     const endTime = 23;
     const hourHeightRange = 60;
     const fifMinRange = Math.floor(60/4);
     const height=(endTime-startTime+1)*60+"px";
+    const date = useSelector(state => state.date);
 
     let mousedown = false;
     let isBeforeSetTime = true;
@@ -71,14 +72,24 @@ const TimeTable = props => {
     }
 
     useEffect(() => {
+        let string_date;
+        if (date==null){
+            string_date = {
+                year: new Date().getFullYear().toString(),
+                month: intToString(new Date().getMonth()+1),
+                day: intToString(new Date().getDate())
+            }
+        }else{
+            string_date = {
+                year: date.substring(0, 4),
+                month: date.substring(5, 7),
+                day: date.substring(8, 10)
+            }
+        }
         const SetEventForm = document.getElementById("SetEventForm")
-        const nowY = (date.getHours()-startTime)*hourHeightRange+(date.getMinutes()*hourHeightRange/60)+10;
         props.setStartTimeIdx(0);
         props.setEndTimeIdx(0);
         SetEventForm.scrollTop=0;
-        setTimeout(() => {
-            SetEventForm.scrollTo({top: nowY, behavior: 'smooth'});
-        }, 100);
         const canvas = canvasRef.current;
         const ctx = getCTX(canvas);
         canvas.addEventListener("mousedown", canvasMousedownHandler);
@@ -106,7 +117,7 @@ const TimeTable = props => {
                 month: event.start_time.substring(5, 7),
                 day: event.start_time.substring(8, 10)
             };
-            if (start_time.year===date.getFullYear().toString() && start_time.month===intToString(date.getMonth()+1) && start_time.day===intToString(date.getDate())){
+            if (start_time.year===string_date.year && start_time.month===string_date.month && start_time.day===string_date.day){
                 ctx.fillStyle = "rgb(3, 155, 229)";
                 const eventStartHour = event.start_time.substring(11,13);
                 const eventStartMin = event.start_time.substring(14,16);
@@ -134,13 +145,19 @@ const TimeTable = props => {
         ctx.stroke();
         ctx.beginPath();
 
-        ctx.strokeStyle = "red";
-        ctx.lineWidth = 2;
-        ctx.moveTo(40, nowY);
-        ctx.lineTo(200, nowY);
-        ctx.closePath();
-        ctx.stroke();
-    }, [props.room.name])
+        if (date==null){
+            const nowY = (new Date().getHours()-startTime)*hourHeightRange+(new Date().getMinutes()*hourHeightRange/60)+10;
+            ctx.strokeStyle = "red";
+            ctx.lineWidth = 2;
+            ctx.moveTo(40, nowY);
+            ctx.lineTo(200, nowY);
+            ctx.closePath();
+            ctx.stroke();
+            setTimeout(() => {
+                SetEventForm.scrollTo({top: nowY, behavior: 'smooth'});
+            }, 100);
+        }
+    }, [props.room.name, date])
 
     return(<canvas id="TimeTable" ref={canvasRef} style={{height: height}}/>);
 }
