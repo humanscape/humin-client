@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Draggable from "react-draggable";
 import { useDispatch, useSelector } from "react-redux";
 import getFormatDate from "../common/lib/GetFormatDate";
@@ -82,7 +82,7 @@ const SetEvent = () => {
     return(
         <div id="SetEvent">
             {userProfile!=null && room && 
-                <form>
+                <form id="SetEventForm">
                     <div className="Title">{room.name}</div>
                     <TimeTable room={room} setStartTimeIdx={setStartTimeIdx} setEndTimeIdx={setEndTimeIdx}/>
                     <Draggable>
