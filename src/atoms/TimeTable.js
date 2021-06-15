@@ -71,8 +71,14 @@ const TimeTable = props => {
     }
 
     useEffect(() => {
+        const SetEventForm = document.getElementById("SetEventForm")
+        const nowY = (date.getHours()-startTime)*hourHeightRange+(date.getMinutes()*hourHeightRange/60)+10;
         props.setStartTimeIdx(0);
         props.setEndTimeIdx(0);
+        SetEventForm.scrollTop=0;
+        setTimeout(() => {
+            SetEventForm.scrollTo({top: nowY, behavior: 'smooth'});
+        }, 100);
         const canvas = canvasRef.current;
         const ctx = getCTX(canvas);
         canvas.addEventListener("mousedown", canvasMousedownHandler);
@@ -124,6 +130,14 @@ const TimeTable = props => {
         ctx.beginPath();
         ctx.moveTo(40, 0);
         ctx.lineTo(40, 1650);
+        ctx.closePath();
+        ctx.stroke();
+        ctx.beginPath();
+
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 2;
+        ctx.moveTo(40, nowY);
+        ctx.lineTo(200, nowY);
         ctx.closePath();
         ctx.stroke();
     }, [props.room.name])

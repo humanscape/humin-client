@@ -82,7 +82,7 @@ const SetEvent = () => {
     return(
         <div id="SetEvent">
             {userProfile!=null && room && 
-                <form>
+                <form id="SetEventForm">
                     <div className="Title">{room.name}</div>
                     <TimeTable room={room} setStartTimeIdx={setStartTimeIdx} setEndTimeIdx={setEndTimeIdx}/>
                     <Draggable>
