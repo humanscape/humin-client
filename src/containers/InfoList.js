@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Info from "../atoms/Info";
 import getRoomNames from "../common/lib/GetRoomNames";
+import SetDate from "../components/SetDate";
 import { setClickedRoom } from "../store/modules/ClickedRoom";
 import { setRooms } from "../store/modules/Rooms";
 
@@ -40,6 +41,7 @@ const InfoList = () => {
 
     return (
         <div id="InfoPage">
+            <SetDate/>
             <table id="InfoList">
                 <colgroup>
                     <col width="10%" />

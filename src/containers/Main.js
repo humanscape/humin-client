@@ -7,8 +7,8 @@ class Main extends React.Component {
     render() {
         return (
             <div id="MainPage">
-                <SidePanel/>
                 <ColorBar/>
+                <SidePanel/>
                 <RoomMap/>
             </div>
         )

@@ -11,7 +11,7 @@ const SetEvent = () => {
     const intToString = int => {
         return int.toString().padStart(2, "0");
     }
-    const date = new Date();
+    const date = useSelector(state => state.date);
     const [startTimeIdx, setStartTimeIdx] = useState(0);
     const [endTimeIdx, setEndTimeIdx] = useState(0);
     const [attendees, setAttendees] = useState([]);
@@ -54,14 +54,18 @@ const SetEvent = () => {
         const startMin = document.getElementsByName("startTime")[0].selectedIndex*15%60;
         const endHour = Math.floor(document.getElementsByName("endTime")[0].selectedIndex*15/60);
         const endMin = document.getElementsByName("endTime")[0].selectedIndex*15%60;
-        
+        let string_date;
+        if (date==null){
+            string_date = getFormatDate(new Date())
+        }
+        string_date = date
         const event = {
             "summary": document.getElementsByName("summary")[0].value,
             "start": {
-                "dateTime": getFormatDate(date)+"T"+intToString(startHour)+":"+intToString(startMin)+":00+09:00"
+                "dateTime": string_date+"T"+intToString(startHour)+":"+intToString(startMin)+":00+09:00"
             },
             "end": {
-                "dateTime": getFormatDate(date)+"T"+intToString(endHour)+":"+intToString(endMin)+":00+09:00"
+                "dateTime": string_date+"T"+intToString(endHour)+":"+intToString(endMin)+":00+09:00"
             },
             "attendees": [...attendees, {email: room.calendar_id}, {email: userProfile.profileObj.email}].map(attend => {return {"email": attend.email}}).concat([]),
         }

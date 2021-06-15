@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import UserDropdown from "./UsersDropdown";
 
 const EmptyEvent = props => {
@@ -36,8 +37,9 @@ const intToString = int => {
 
 const AvaliableInfo = props => {
     const room=props.room;
-    const date = new Date();
-    if (room.events.length>0){
+    const date = useSelector(state => state.date);
+    if (room.events.length>0 && date==null){
+        const date = new Date();
         const event = room.events[0];
         const start_time = {
             year: event.start_time.substring(0, 4),
