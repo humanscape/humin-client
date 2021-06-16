@@ -55,10 +55,10 @@ const SetEvent = () => {
         const endHour = Math.floor(document.getElementsByName("endTime")[0].selectedIndex*15/60);
         const endMin = document.getElementsByName("endTime")[0].selectedIndex*15%60;
         let string_date;
+        string_date = date
         if (date==null){
             string_date = getFormatDate(new Date())
         }
-        string_date = date
         const event = {
             "summary": document.getElementsByName("summary")[0].value,
             "start": {
