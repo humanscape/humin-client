@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import EventClassifier from "../common/lib/EventClassifier";
 import map from '../common/images/map.png';
 import getCTX from '../common/lib/GetCTX';
+import { setClickedRoom } from "../store/modules/ClickedRoom";
 const RoomMap = () => {
     const canvasRef = React.createRef();
     const colors = ["rgba(38, 70, 83, 0.7)", "rgba(42, 157, 143, 0.7)", "rgba(244, 162, 97, 0.7)", "rgba(231, 111, 81, 0.7)"];
+    const dispatch = useDispatch();
+    const userProfile = useSelector(state => state.userProfile);
     const roomDrawLocation = {
         안방:[20, 205, 65, 250],
         골방: [230, 215, 265, 255],
@@ -27,6 +30,11 @@ const RoomMap = () => {
     const roomList = useSelector(state => state.rooms);
     const allRoomNameList = ['안방','골방','M1', 'M2', 'M3', 'H1', 'H2', 'H3', 'PR', '주방', 'C1', 'C2', 'C3', '휴방', '마미톡', '휴먼'];
     const roomState = {};
+    const roomClick = roomName => {
+        if (userProfile!=null){
+            dispatch(setClickedRoom(roomName));
+        }
+    }
     useEffect(() => {        
         roomList.forEach(room => {
             let color = colors[1];
@@ -38,6 +46,13 @@ const RoomMap = () => {
         });
         const canvas = canvasRef.current;
         const ctx = getCTX(canvas);
+        canvas.addEventListener("click", function(e) {
+            allRoomNameList.forEach((roomName) => {
+                if (e.layerX>=roomDrawLocation[roomName][0] && e.layerX<=roomDrawLocation[roomName][2] && e.layerY>=roomDrawLocation[roomName][1] && e.layerY<=roomDrawLocation[roomName][3]){
+                    roomClick(roomName);
+                }
+            })
+          });
         ctx.font = "18px sans-serif, 나눔고딕코딩";
         allRoomNameList.forEach(roomName => {
             if (!Object.keys(roomState).includes(roomName)){
