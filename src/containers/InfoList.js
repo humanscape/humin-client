@@ -34,7 +34,7 @@ const InfoList = () => {
             fetchRooms();
             const getRoomsInterval = setInterval(() => {
                 fetchRooms();
-            }, 6000);
+            }, 15000);
             return () => clearInterval(getRoomsInterval);
         }
     }, [organization])
