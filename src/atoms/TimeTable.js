@@ -13,6 +13,7 @@ const TimeTable = props => {
     const fifMinRange = Math.floor(60/4);
     const height=(endTime-startTime+1)*60+"px";
     const date = useSelector(state => state.date);
+    const initY = 840;
 
     let mousedown = false;
     let isBeforeSetTime = true;
@@ -29,7 +30,7 @@ const TimeTable = props => {
     const canvasMousedownHandler = e => {
         if(isBeforeSetTime){
             mousedown=true;
-            dragList.push(yRangeClassifier(e.layerY))
+            dragList.push(yRangeClassifier(e.layerY+initY))
         }
     }
 
@@ -46,7 +47,7 @@ const TimeTable = props => {
 
     const canvaseMousemoveHandler = (e, ctx) => {
         if(mousedown && isBeforeSetTime){
-            const y = yRangeClassifier(e.layerY);
+            const y = yRangeClassifier(e.layerY)+initY;
             if(dragList[dragList.length-2]===y){
                 ctx.fillStyle = "white";
                 const lastY = dragList.pop();
